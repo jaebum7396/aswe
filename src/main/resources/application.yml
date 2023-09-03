@@ -1,0 +1,59 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: aswe
+  profiles:
+    active: local
+    #active: deploy
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    initialization-mode: always #import data
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  jpa:
+    properties:
+      hibernate:
+        use_sql_comments: 'true'
+        format_sql: 'true'
+        show_sql: 'true'
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: 'create'
+      #ddl-auto=none:
+    #show-sql: 'true'
+    defer-datasource-initialization: 'true' #import data
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  devtools:
+    restart:
+      enabled: 'true'
+    livereload:
+      enabled: 'true'
+
+logging:
+  level:
+    root: warn
+    org:
+      hibernate:
+        SQL: warn
+        type:
+          descriptor:
+            sql: warn
+
+#SECRET KEY
+jwt:
+  secret:
+    key: ${JWT_SECRET_KEY}
+jasypt:
+  encryptor:
+    password: ${JASYPT_ENCRYPTOR_PASSWORD}
+token:
+  access-expired-time : 14400000
+  refresh-expired-time : 2629800000
