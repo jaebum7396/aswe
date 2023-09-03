@@ -1,5 +1,6 @@
 package com.aswe.user.controller;
 
+import com.aswe.common.CommonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,21 +25,16 @@ import java.util.Map;
 public class UserController {
     @Autowired UserService userService;
     @Autowired AuthService authService;
+    @Autowired CommonUtils commonUtils;
 
-    public ResponseEntity<Response> okResponsePackaging(Map<String, Object> result) {
-        Response response = Response.builder()
-                .message("요청 성공")
-                .result(result).build();
-        return ResponseEntity.ok().body(response);
-    }
     @PostMapping(value = "/signup")
     @Operation(summary="회원가입", description="회원 가입 API")
     public ResponseEntity signup(@RequestBody SignupRequest signupRequest) throws Exception {
-        return okResponsePackaging(userService.signup(signupRequest));
+        return commonUtils.okResponsePackaging(userService.signup(signupRequest));
     }
     @PostMapping(value = "/login")
     @Operation(summary="로그인", description="가입한 회원을 로그인 하는 API")
     public ResponseEntity login(@RequestBody LoginRequest loginRequest) throws Exception {
-        return okResponsePackaging(authService.generateToken(loginRequest));
+        return commonUtils.okResponsePackaging(authService.generateToken(loginRequest));
     }
 }
