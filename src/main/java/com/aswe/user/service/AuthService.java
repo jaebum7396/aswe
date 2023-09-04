@@ -3,6 +3,7 @@ package com.aswe.user.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,11 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aswe.user.model.*;
 import com.aswe.user.repository.AuthRepository;
 
+import javax.annotation.PostConstruct;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -29,44 +29,35 @@ public class AuthService implements UserDetailsService {
     @Autowired AuthRepository authRepository;
     @Autowired private PasswordEncoder passwordEncoder;
     private Key secretKey;
+    @Value("${jwt.secret.key}") private String JWT_SECRET_KEY;
     // 만료시간
     @Value("${token.access-expired-time}") private long ACCESS_EXPIRED_TIME;
     // 재발급 토큰 만료시간
     @Value("${token.refresh-expired-time}") private long REFRESH_EXPIRED_TIME;
-
-    public String createAccessToken(String userCd, Set<Auth> roles) {
+    @PostConstruct
+    protected void init() {
+        secretKey = Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+    }
+    public String createAccessToken(String userCd, List<Auth> roles) {
         Claims claims = Jwts.claims().setSubject(userCd);
-        claims.put("userCd", userCd);
         claims.put("roles", roles);
         return Jwts.builder()
                 .setClaims(claims)
+                .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis()  + ACCESS_EXPIRED_TIME))
-                .setIssuedAt(new Date())
-                .signWith(secretKey, SignatureAlgorithm.HS256)
-                .compact();
-    }
-
-    public String createRefreshToken(String domainCd, String userCd) {
-        Claims claims = Jwts.claims();
-        claims.put("domainCd", domainCd);
-        claims.put("userCd", userCd);
-        return Jwts.builder()
-                .addClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_EXPIRED_TIME))
-                .setIssuedAt(new Date())
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public Map<String, Object> generateToken(LoginRequest loginRequest){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        User userEntity = authRepository.findByUserId(loginRequest.getUserId()).orElseThrow(() ->
-            new BadCredentialsException(loginRequest.getUserId()+" : 아이디가 존재하지 않습니다."));
+        User userEntity = authRepository.findByUserId(loginRequest.getUserId())
+            .orElseThrow(() -> new BadCredentialsException(loginRequest.getUserId()+" : 아이디가 존재하지 않습니다."));
         if (!passwordEncoder.matches(loginRequest.getUserPw(), userEntity.getUserPw())) {
             throw new BadCredentialsException("잘못된 비밀번호입니다.");
         }
         String userCd = userEntity.getUserCd();
-        Set<Auth> roles = userEntity.getRoles();
+        List<Auth> roles = userEntity.getRoles();
 
         String accessToken = createAccessToken(userCd, roles);
 

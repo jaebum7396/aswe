@@ -11,14 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SignupRequest {
-    @ApiModelProperty(value="userId", example="TEST_PLUS", required=true)
+    @ApiModelProperty(value="userId", example="mart", required=true)
     private String userId;
-    @ApiModelProperty(value="userPw", example="TEST_PLUS1234", required=true)
+    @ApiModelProperty(value="userPw", example="mart1234", required=true)
     private String userPw;
-    @ApiModelProperty(value="userPhoneNo", example="010-0000-0366", required=true)
-    private String userPhoneNo;
-    @ApiModelProperty(value="userGender", example="M,W", required=true)
-    private String userGender;
+    @ApiModelProperty(value="userType", example="MART", required=true)
+    private String userType;
 
     public User toEntity() {
         return User.builder()

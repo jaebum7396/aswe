@@ -1,6 +1,7 @@
 package com.aswe.user.model;
 
 import com.aswe.common.model.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -11,7 +12,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -29,9 +32,6 @@ public class User extends BaseEntity implements Serializable {
     @Column( name = "USER_CD")
     private String userCd;
 
-    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
-    private Set<Auth> roles = new HashSet<>();
-
     @Column(name = "USER_ID", nullable = false)
     private String userId;
 
@@ -39,11 +39,12 @@ public class User extends BaseEntity implements Serializable {
     @Column(name = "USER_PW", nullable = false)
     private String userPw;
 
-    @Column(name = "USER_TYPE",nullable = true) @ColumnDefault("1")
-    private String userType;
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<Auth> roles = new ArrayList<>();
 
-    public void setRoles(Set<Auth> roles) {
-        this.roles = new HashSet<>(roles);
-        //roles.forEach(o -> o.setUser(this));
+    public void setRoles(List<Auth> roles) {
+        this.roles = roles;
+        roles.forEach(o -> o.setUser(this));
     }
 }

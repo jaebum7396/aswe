@@ -22,35 +22,9 @@ public class QAuth extends EntityPathBase<Auth> {
 
     public static final QAuth auth = new QAuth("auth");
 
-    public final com.aswe.common.model.QBaseEntity _super = new com.aswe.common.model.QBaseEntity(this);
-
     public final StringPath authCd = createString("authCd");
 
     public final StringPath authType = createString("authType");
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> deleteDt = _super.deleteDt;
-
-    //inherited
-    public final StringPath deleteRemark = _super.deleteRemark;
-
-    //inherited
-    public final NumberPath<Long> deleteUserCd = _super.deleteUserCd;
-
-    //inherited
-    public final StringPath deleteYn = _super.deleteYn;
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> insertDt = _super.insertDt;
-
-    //inherited
-    public final NumberPath<Long> insertUserCd = _super.insertUserCd;
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> updateDt = _super.updateDt;
-
-    //inherited
-    public final NumberPath<Long> updateUserCd = _super.updateUserCd;
 
     public final QUser userEntity;
 

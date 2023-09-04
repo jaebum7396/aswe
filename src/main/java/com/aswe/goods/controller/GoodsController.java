@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+
 @Slf4j
 @Api(tags = "GoodsController")
 @Tag(name = "GoodsController", description = "상품 컨트롤러")
@@ -27,22 +30,22 @@ public class GoodsController {
         return commonUtils.okResponsePackaging(goodsService.searchGoods(goodsCd));
     }
     @GetMapping(value = "/goods/price")
-    @Operation(summary="상품 조회", description="상품 조회 API")
-    public ResponseEntity searchGoods(@RequestParam String goodsCd, ) throws Exception {
-        return commonUtils.okResponsePackaging(goodsService.searchGoods(goods));
+    @Operation(summary="상품 금액 조회", description="상품 금액 조회 API")
+    public ResponseEntity searchGoodsPrice(@RequestParam String goodsCd, @RequestParam LocalDateTime insertDT) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.searchGoodsPrice(goodsCd, insertDT));
     }
     @PostMapping(value = "/goods")
     @Operation(summary="상품 생성", description="상품 생성 API")
-    public ResponseEntity createGoods(@RequestBody Goods goods) throws Exception {
-        return commonUtils.okResponsePackaging(goodsService.createGoods(goods));
+    public ResponseEntity createGoods(HttpServletRequest request, @RequestBody Goods goods) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.createGoods(request, goods));
     }
     @PutMapping(value = "/goods")
-    @Operation(summary="상품 생성", description="상품 생성 API")
+    @Operation(summary="상품 업데이트", description="상품 업데이트 API")
     public ResponseEntity updateGoods(@RequestBody Goods goods) throws Exception {
         return commonUtils.okResponsePackaging(goodsService.updateGoods(goods));
     }
     @DeleteMapping(value = "/goods")
-    @Operation(summary="상품 생성", description="상품 생성 API")
+    @Operation(summary="상품 삭제", description="상품 삭제 API")
     public ResponseEntity deleteGoods(@RequestBody Goods goods) throws Exception {
         return commonUtils.okResponsePackaging(goodsService.deleteGoods(goods));
     }

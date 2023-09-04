@@ -1,12 +1,15 @@
-package com.aswe.goods.model;
+package com.aswe.order.model;
 
 import com.aswe.common.model.BaseEntity;
+import com.aswe.goods.model.Goods;
+import com.aswe.goods.model.GoodsPrice;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,21 +18,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@Entity(name = "TB_GOODS")
-public class Goods extends BaseEntity implements Serializable {
+@Entity(name = "TB_ORDER")
+public class Order extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column( name = "GOODS_CD")
-    private String goodsCd;
-
-    @Column( name = "GOODS_NM")
-    private String goodsNm;
-
-    @Column( name = "QUANTITY")
-    private String quantity;
+    @Column( name = "ORDER_CD")
+    private String orderCd;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
     @JoinColumn(name = "GOODS_CD")
-    private List<GoodsPrice> goodsPrices = new ArrayList<>();
+    private List<Goods> goods = new ArrayList<>();
+
+    @Column( name = "DELIVERY_PRICE") @Builder.Default
+    private BigDecimal deliveryPrice = new BigDecimal("3000");
 }

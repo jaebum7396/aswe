@@ -19,10 +19,7 @@ import com.aswe.user.repository.UserRepository;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -39,21 +36,7 @@ public class UserService {
         return check;
     }
 
-    public Claims getClaims(HttpServletRequest request){
-        try{
-            Key secretKey = Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-            Claims claim = Jwts.parserBuilder().setSigningKey(secretKey).build()
-                    .parseClaimsJws(request.getHeader("authorization")).getBody();
-            return claim;
-        } catch (ExpiredJwtException e) {
-            throw new ExpiredJwtException(null, null, "로그인 시간이 만료되었습니다.");
-        } catch (Exception e) {
-            throw new BadCredentialsException("인증 정보에 문제가 있습니다.");
-        }
-    }
-
     public Map<String, Object> signup(SignupRequest signupRequest) throws Exception {
-        System.out.println("UserService.signup.params : " + signupRequest.toString());
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         //중복 아이디 검사
         if (duplicateIdValidate(signupRequest)) {
@@ -63,9 +46,8 @@ public class UserService {
         User userEntity = signupRequest.toEntity();
         userEntity.setDeleteYn("N");
         //ROLE 설정
-        Set<Auth> roles = new HashSet<>();
-        roles.add(Auth.builder().authType("ROLE_USER").build());
-        userEntity.setRoles(roles);
+        String userType = signupRequest.getUserType();
+        userEntity.setRoles(Collections.singletonList(Auth.builder().authType(userType).build()));
 
         userRepository.save(userEntity);
 

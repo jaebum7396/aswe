@@ -12,8 +12,8 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor
 @Builder
 public class LoginRequest {
-    @ApiModelProperty(value="userId", example="TEST_PLUS", required=true)
+    @ApiModelProperty(value="userId", example="mart", required=true)
     private String userId;
-    @ApiModelProperty(value="userPw", example="TEST_PLUS1234", required=true)
+    @ApiModelProperty(value="userPw", example="mart1234", required=true)
     private String userPw;
 }

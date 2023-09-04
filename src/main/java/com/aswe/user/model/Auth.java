@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @EqualsAndHashCode(callSuper=false)
 @Entity(name = "TB_AUTH")
-public class Auth extends BaseEntity {
+public class Auth {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
@@ -23,7 +23,9 @@ public class Auth extends BaseEntity {
     @Column(name = "AUTH_TYPE")
     private String authType;
 
-    @JoinColumn(name = "USER_CD") @ManyToOne(fetch = FetchType.LAZY) @JsonIgnore
+    @JoinColumn(name = "USER_CD")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User userEntity;
 
     public void setUser(User userEntity) {

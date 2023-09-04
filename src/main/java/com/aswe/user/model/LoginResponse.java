@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -19,6 +21,6 @@ public class LoginResponse {
     }
     private String userId;
     @Builder.Default
-    private Set<Auth> roles = new HashSet<Auth>();
+    private List<Auth> roles = new ArrayList<>();
     private String token;
 }

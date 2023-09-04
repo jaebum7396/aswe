@@ -1,8 +1,11 @@
-package com.aswe.goods.model;
+package com.aswe.coupon.model;
 
 import com.aswe.common.model.BaseEntity;
+import com.aswe.goods.model.Goods;
+import com.aswe.goods.model.GoodsPrice;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,21 +18,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@Entity(name = "TB_GOODS")
-public class Goods extends BaseEntity implements Serializable {
+@Entity(name = "TB_COUPON")
+public class Coupon extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column( name = "GOODS_CD")
-    private String goodsCd;
+    @Column( name = "COUPON_CD")
+    private String couponCd;
 
-    @Column( name = "GOODS_NM")
-    private String goodsNm;
+    @Column(name = "COUPON_TYPE",nullable = true) @ColumnDefault("1")
+    private String couponType;
 
-    @Column( name = "QUANTITY")
-    private String quantity;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
-    @JoinColumn(name = "GOODS_CD")
-    private List<GoodsPrice> goodsPrices = new ArrayList<>();
+    @ManyToOne
+    private Goods goods;
 }

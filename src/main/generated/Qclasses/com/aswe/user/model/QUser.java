@@ -40,7 +40,7 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final NumberPath<Long> insertUserCd = _super.insertUserCd;
 
-    public final SetPath<Auth, QAuth> roles = this.<Auth, QAuth>createSet("roles", Auth.class, QAuth.class, PathInits.DIRECT2);
+    public final ListPath<Auth, QAuth> roles = this.<Auth, QAuth>createList("roles", Auth.class, QAuth.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updateDt = _super.updateDt;
@@ -53,8 +53,6 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath userId = createString("userId");
 
     public final StringPath userPw = createString("userPw");
-
-    public final StringPath userType = createString("userType");
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

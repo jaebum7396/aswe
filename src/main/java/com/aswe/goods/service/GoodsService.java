@@ -1,5 +1,7 @@
 package com.aswe.goods.service;
 
+import com.aswe.common.CommonUtils;
+import com.aswe.goods.model.Goods;
 import com.aswe.user.model.Auth;
 import com.aswe.user.model.SignupRequest;
 import com.aswe.user.model.User;
@@ -19,56 +21,41 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class GoodsService {
     @Autowired UserRepository userRepository;
-    @Autowired PasswordEncoder passwordEncoder;
+    @Autowired CommonUtils commonUtils;
 
-    @Value("${jwt.secret.key}")
-    private String JWT_SECRET_KEY;
-
-    public boolean duplicateIdValidate(SignupRequest signupRequest) {
-        boolean check = userRepository.findByUserId(signupRequest.getUserId()).isPresent();
-        return check;
-    }
-
-    public Claims getClaims(HttpServletRequest request){
-        try{
-            Key secretKey = Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-            Claims claim = Jwts.parserBuilder().setSigningKey(secretKey).build()
-                    .parseClaimsJws(request.getHeader("authorization")).getBody();
-            return claim;
-        } catch (ExpiredJwtException e) {
-            throw new ExpiredJwtException(null, null, "로그인 시간이 만료되었습니다.");
-        } catch (Exception e) {
-            throw new BadCredentialsException("인증 정보에 문제가 있습니다.");
-        }
-    }
-
-    public Map<String, Object> signup(SignupRequest signupRequest) throws Exception {
-        System.out.println("UserService.signup.params : " + signupRequest.toString());
+    public Map<String, Object> searchGoods(String goodsCd) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        //중복 아이디 검사
-        if (duplicateIdValidate(signupRequest)) {
-            throw new BadCredentialsException("중복된 아이디입니다.");
-        }
-        signupRequest.setUserPw(passwordEncoder.encode(signupRequest.getUserPw()));
-        User userEntity = signupRequest.toEntity();
-        userEntity.setDeleteYn("N");
-        //ROLE 설정
-        Set<Auth> roles = new HashSet<>();
-        roles.add(Auth.builder().authType("ROLE_USER").build());
-        userEntity.setRoles(roles);
+        return resultMap;
+    }
 
-        userRepository.save(userEntity);
+    public Map<String, Object> searchGoodsPrice(String goodsCd, LocalDateTime insertDT) throws Exception {
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        return resultMap;
+    }
 
+    public Map<String, Object> createGoods(HttpServletRequest request, Goods goods) throws Exception {
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        Claims claim = commonUtils.getClaims(request);
+        ArrayList<Auth> auth = claim.get("roles", ArrayList.class);
+        System.out.println(auth.toString());
+        return resultMap;
+    }
+
+    public Map<String, Object> updateGoods(Goods goods) throws Exception {
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        return resultMap;
+    }
+
+    public Map<String, Object> deleteGoods(Goods goods) throws Exception {
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         return resultMap;
     }
 }
