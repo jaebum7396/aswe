@@ -23,7 +23,12 @@ public class GoodsRequest {
     public Goods toEntity() {
         Goods goods =Goods.builder()
                 .goodsNm(goodsNm)
+                .deleteYn("N")
                 .build();
+        goods.addGoodsPrice(GoodsPrice.builder()
+                .goodsPrice(price)
+                .deleteYn("N")
+                .build());
         return goods;
     }
 }

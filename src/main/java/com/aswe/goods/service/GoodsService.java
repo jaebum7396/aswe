@@ -3,6 +3,7 @@ package com.aswe.goods.service;
 import com.aswe.common.CommonUtils;
 import com.aswe.goods.model.Goods;
 import com.aswe.goods.model.GoodsRequest;
+import com.aswe.goods.repository.GoodsRepository;
 import com.aswe.user.model.Auth;
 import com.aswe.user.model.SignupRequest;
 import com.aswe.user.model.User;
@@ -29,7 +30,7 @@ import java.util.*;
 @Transactional
 @RequiredArgsConstructor
 public class GoodsService {
-    @Autowired UserRepository userRepository;
+    @Autowired GoodsRepository goodsRepository;
     @Autowired CommonUtils commonUtils;
 
     public Map<String, Object> searchGoods(String goodsCd) throws Exception {
@@ -48,6 +49,7 @@ public class GoodsService {
         ArrayList<HashMap<String,String>> roles = claim.get("roles", ArrayList.class);
         roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
         Goods goods = goodsRequest.toEntity();
+        goodsRepository.save(goods);
         return resultMap;
     }
 
