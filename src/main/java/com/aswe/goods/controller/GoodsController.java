@@ -1,6 +1,7 @@
 package com.aswe.goods.controller;
 
 import com.aswe.common.CommonUtils;
+import com.aswe.goods.model.Goods;
 import com.aswe.goods.service.GoodsService;
 import com.aswe.user.model.SignupRequest;
 import io.swagger.annotations.Api;
@@ -10,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Api(tags = "GoodsController")
@@ -23,8 +22,28 @@ public class GoodsController {
     @Autowired GoodsService goodsService;
     @Autowired CommonUtils commonUtils;
     @GetMapping(value = "/goods")
-    @Operation(summary="회원가입", description="회원 가입 API")
-    public ResponseEntity goods(@RequestBody SignupRequest signupRequest) throws Exception {
-        return commonUtils.okResponsePackaging(goodsService.signup(signupRequest));
+    @Operation(summary="상품 조회", description="상품 조회 API")
+    public ResponseEntity searchGoods(@RequestParam String goodsCd) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.searchGoods(goodsCd));
+    }
+    @GetMapping(value = "/goods/price")
+    @Operation(summary="상품 조회", description="상품 조회 API")
+    public ResponseEntity searchGoods(@RequestParam String goodsCd, ) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.searchGoods(goods));
+    }
+    @PostMapping(value = "/goods")
+    @Operation(summary="상품 생성", description="상품 생성 API")
+    public ResponseEntity createGoods(@RequestBody Goods goods) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.createGoods(goods));
+    }
+    @PutMapping(value = "/goods")
+    @Operation(summary="상품 생성", description="상품 생성 API")
+    public ResponseEntity updateGoods(@RequestBody Goods goods) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.updateGoods(goods));
+    }
+    @DeleteMapping(value = "/goods")
+    @Operation(summary="상품 생성", description="상품 생성 API")
+    public ResponseEntity deleteGoods(@RequestBody Goods goods) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.deleteGoods(goods));
     }
 }
