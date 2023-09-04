@@ -1,6 +1,7 @@
 package com.aswe.goods.model;
 
 import com.aswe.common.model.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
@@ -21,15 +22,17 @@ public class Goods extends BaseEntity implements Serializable {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     @Column( name = "GOODS_CD")
+    @JsonIgnore
     private String goodsCd;
 
     @Column( name = "GOODS_NM")
     private String goodsNm;
 
-    @Column( name = "QUANTITY")
-    private String quantity;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
     @JoinColumn(name = "GOODS_CD")
     private List<GoodsPrice> goodsPrices = new ArrayList<>();
+
+    public void addGoodsPrice(GoodsPrice goodsPrice) {
+        this.goodsPrices.add(goodsPrice);
+    }
 }

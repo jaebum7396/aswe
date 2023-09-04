@@ -29,32 +29,39 @@ public abstract class BaseEntity {
     @CreatedDate
     @Column(nullable = false, updatable = false, name = "INSERT_DT")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonIgnore
     private LocalDateTime insertDt;
 
     @CreatedBy
-    @JsonIgnore
     @Column(name = "INSERT_USER_CD")
+    @JsonIgnore
     private Long insertUserCd;
 
     @LastModifiedDate
     @Column(name = "UPDATE_DT")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonIgnore
     private LocalDateTime updateDt;
 
     @LastModifiedBy
     @Column(name = "UPDATE_USER_CD")
+    @JsonIgnore
     private Long updateUserCd;
 
     @Column(name = "DELETE_YN")
+    @JsonIgnore
     private String deleteYn;
 
     @Column(name = "DELETE_DT")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonIgnore
     private LocalDateTime deleteDt;
 
     @Column(name = "DELETE_USER_CD")
+    @JsonIgnore
     private Long deleteUserCd;
 
     @Column(name = "DELETE_REMARK")
+    @JsonIgnore
     private String deleteRemark;
 }

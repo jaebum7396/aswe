@@ -2,6 +2,7 @@ package com.aswe.goods.service;
 
 import com.aswe.common.CommonUtils;
 import com.aswe.goods.model.Goods;
+import com.aswe.goods.model.GoodsRequest;
 import com.aswe.user.model.Auth;
 import com.aswe.user.model.SignupRequest;
 import com.aswe.user.model.User;
@@ -41,11 +42,12 @@ public class GoodsService {
         return resultMap;
     }
 
-    public Map<String, Object> createGoods(HttpServletRequest request, Goods goods) throws Exception {
+    public Map<String, Object> createGoods(HttpServletRequest request, GoodsRequest goodsRequest) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         Claims claim = commonUtils.getClaims(request);
-        ArrayList<Auth> auth = claim.get("roles", ArrayList.class);
-        System.out.println(auth.toString());
+        ArrayList<HashMap<String,String>> roles = claim.get("roles", ArrayList.class);
+        roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
+        Goods goods = goodsRequest.toEntity();
         return resultMap;
     }
 

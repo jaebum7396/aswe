@@ -1,6 +1,7 @@
 package com.aswe.goods.model;
 
 import com.aswe.common.model.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +27,7 @@ public class GoodsPrice extends BaseEntity implements Serializable {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     @Column( name = "GOODS_PRICE_CD")
+    @JsonIgnore
     private String goodsPriceCd;
 
     @Column(name = "GOODS_PRICE", nullable = true)

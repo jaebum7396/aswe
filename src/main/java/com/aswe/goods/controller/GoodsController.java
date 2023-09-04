@@ -2,6 +2,7 @@ package com.aswe.goods.controller;
 
 import com.aswe.common.CommonUtils;
 import com.aswe.goods.model.Goods;
+import com.aswe.goods.model.GoodsRequest;
 import com.aswe.goods.service.GoodsService;
 import com.aswe.user.model.SignupRequest;
 import io.swagger.annotations.Api;
@@ -36,8 +37,8 @@ public class GoodsController {
     }
     @PostMapping(value = "/goods")
     @Operation(summary="상품 생성", description="상품 생성 API")
-    public ResponseEntity createGoods(HttpServletRequest request, @RequestBody Goods goods) throws Exception {
-        return commonUtils.okResponsePackaging(goodsService.createGoods(request, goods));
+    public ResponseEntity createGoods(HttpServletRequest request, @RequestBody GoodsRequest goodsRequest) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.createGoods(request, goodsRequest));
     }
     @PutMapping(value = "/goods")
     @Operation(summary="상품 업데이트", description="상품 업데이트 API")

@@ -2,7 +2,6 @@ package com.aswe.order.model;
 
 import com.aswe.common.model.BaseEntity;
 import com.aswe.goods.model.Goods;
-import com.aswe.goods.model.GoodsPrice;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,18 +17,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@Entity(name = "TB_ORDER")
-public class Order extends BaseEntity implements Serializable {
+@Entity(name = "TB_ORDER_DETAIL")
+public class OrderDetail extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column( name = "ORDER_CD")
-    private String orderCd;
+    @Column( name = "ORDER_DETAIL_CD")
+    private String orderDetailCd;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
-    @JoinColumn(name = "ORDER_CD")
-    private List<OrderDetail> orderDetails = new ArrayList<>();
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "GOODS_CD")
+    private Goods goods;
 
-    @Column( name = "DELIVERY_PRICE") @Builder.Default
-    private BigDecimal deliveryPrice = new BigDecimal("3000");
+    @Column( name = "QUANTITY") @Builder.Default
+    private BigDecimal quantity = new BigDecimal("3000");
 }
