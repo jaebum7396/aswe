@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import com.aswe.user.model.Response;
+import com.aswe.common.model.Response;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

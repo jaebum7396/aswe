@@ -1,5 +1,6 @@
 package com.aswe.user.model;
 
+import com.aswe.common.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

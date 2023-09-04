@@ -22,7 +22,7 @@ public class QAuth extends EntityPathBase<Auth> {
 
     public static final QAuth auth = new QAuth("auth");
 
-    public final QBaseEntity _super = new QBaseEntity(this);
+    public final com.aswe.common.model.QBaseEntity _super = new com.aswe.common.model.QBaseEntity(this);
 
     public final StringPath authCd = createString("authCd");
 

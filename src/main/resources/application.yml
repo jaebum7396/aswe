@@ -50,10 +50,7 @@ logging:
 #SECRET KEY
 jwt:
   secret:
-    key: ${JWT_SECRET_KEY}
-jasypt:
-  encryptor:
-    password: ${JASYPT_ENCRYPTOR_PASSWORD}
+    key: aswe
 token:
   access-expired-time : 14400000
   refresh-expired-time : 2629800000

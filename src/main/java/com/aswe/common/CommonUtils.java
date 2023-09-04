@@ -1,6 +1,6 @@
 package com.aswe.common;
 
-import com.aswe.user.model.Response;
+import com.aswe.common.model.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 

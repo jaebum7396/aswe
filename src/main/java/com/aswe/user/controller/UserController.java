@@ -10,12 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.aswe.user.model.LoginRequest;
-import com.aswe.user.model.Response;
 import com.aswe.user.model.SignupRequest;
 import com.aswe.user.service.AuthService;
 import com.aswe.user.service.UserService;
-
-import java.util.Map;
 
 @Slf4j
 @Api(tags = "UserController")

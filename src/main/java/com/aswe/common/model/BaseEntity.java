@@ -1,4 +1,4 @@
-package com.aswe.user.model;
+package com.aswe.common.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

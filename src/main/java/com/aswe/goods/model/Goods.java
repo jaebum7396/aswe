@@ -1,6 +1,6 @@
 package com.aswe.goods.model;
 
-import com.aswe.user.model.BaseEntity;
+import com.aswe.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

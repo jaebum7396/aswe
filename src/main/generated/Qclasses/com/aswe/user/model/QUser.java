@@ -20,7 +20,7 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final QBaseEntity _super = new QBaseEntity(this);
+    public final com.aswe.common.model.QBaseEntity _super = new com.aswe.common.model.QBaseEntity(this);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> deleteDt = _super.deleteDt;

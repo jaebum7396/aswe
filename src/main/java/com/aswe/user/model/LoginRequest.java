@@ -12,9 +12,6 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor
 @Builder
 public class LoginRequest {
-    @ApiModelProperty(value="domainCd", example="1", required=true)
-    @ColumnDefault("1")
-    private String domainCd;
     @ApiModelProperty(value="userId", example="TEST_PLUS", required=true)
     private String userId;
     @ApiModelProperty(value="userPw", example="TEST_PLUS1234", required=true)

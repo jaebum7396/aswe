@@ -1,4 +1,4 @@
-package com.aswe.user.model;
+package com.aswe.common.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
