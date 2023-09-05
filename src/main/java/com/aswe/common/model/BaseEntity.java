@@ -2,10 +2,7 @@ package com.aswe.common.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -35,7 +32,7 @@ public abstract class BaseEntity {
     @CreatedBy
     @Column(name = "INSERT_USER_CD")
     @JsonIgnore
-    private Long insertUserCd;
+    private String insertUserCd;
 
     @LastModifiedDate
     @Column(name = "UPDATE_DT")
@@ -46,11 +43,12 @@ public abstract class BaseEntity {
     @LastModifiedBy
     @Column(name = "UPDATE_USER_CD")
     @JsonIgnore
-    private Long updateUserCd;
+    private String updateUserCd;
 
     @Column(name = "DELETE_YN")
     @JsonIgnore
-    private String deleteYn;
+    @Builder.Default
+    private String deleteYn = "N";
 
     @Column(name = "DELETE_DT")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
@@ -59,7 +57,7 @@ public abstract class BaseEntity {
 
     @Column(name = "DELETE_USER_CD")
     @JsonIgnore
-    private Long deleteUserCd;
+    private String deleteUserCd;
 
     @Column(name = "DELETE_REMARK")
     @JsonIgnore

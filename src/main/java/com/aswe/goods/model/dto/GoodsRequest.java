@@ -1,33 +1,29 @@
-package com.aswe.goods.model;
+package com.aswe.goods.model.dto;
 
-import com.aswe.user.model.User;
+import com.aswe.goods.model.entity.Goods;
+import com.aswe.goods.model.entity.GoodsPrice;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
 @Data
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class GoodsRequest {
-    @ApiModelProperty(value="goodsNm", example="mart", required=true)
+    @ApiModelProperty(value="goodsNm", example="test_goods")
     private String goodsNm;
-
-    @ApiModelProperty(value="price", example="10000", required=true)
+    @ApiModelProperty(value="price", example="10000")
     private BigDecimal price;
 
     public Goods toEntity() {
-        Goods goods =Goods.builder()
+        Goods goods = Goods.builder()
                 .goodsNm(goodsNm)
-                .deleteYn("N")
                 .build();
         goods.addGoodsPrice(GoodsPrice.builder()
                 .goodsPrice(price)
-                .deleteYn("N")
                 .build());
         return goods;
     }

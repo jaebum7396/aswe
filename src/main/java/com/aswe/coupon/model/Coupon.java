@@ -1,8 +1,7 @@
 package com.aswe.coupon.model;
 
 import com.aswe.common.model.BaseEntity;
-import com.aswe.goods.model.Goods;
-import com.aswe.goods.model.GoodsPrice;
+import com.aswe.goods.model.entity.Goods;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
@@ -10,8 +9,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @SuperBuilder

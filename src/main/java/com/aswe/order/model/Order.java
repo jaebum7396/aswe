@@ -1,8 +1,6 @@
 package com.aswe.order.model;
 
 import com.aswe.common.model.BaseEntity;
-import com.aswe.goods.model.Goods;
-import com.aswe.goods.model.GoodsPrice;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;

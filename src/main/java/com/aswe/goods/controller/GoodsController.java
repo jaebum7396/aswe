@@ -1,10 +1,9 @@
 package com.aswe.goods.controller;
 
 import com.aswe.common.CommonUtils;
-import com.aswe.goods.model.Goods;
-import com.aswe.goods.model.GoodsRequest;
+import com.aswe.goods.model.dto.CreateGoodsRequest;
+import com.aswe.goods.model.dto.UpdateGoodsRequest;
 import com.aswe.goods.service.GoodsService;
-import com.aswe.user.model.SignupRequest;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,17 +36,17 @@ public class GoodsController {
     }
     @PostMapping(value = "/goods")
     @Operation(summary="상품 생성", description="상품 생성 API")
-    public ResponseEntity createGoods(HttpServletRequest request, @RequestBody GoodsRequest goodsRequest) throws Exception {
-        return commonUtils.okResponsePackaging(goodsService.createGoods(request, goodsRequest));
+    public ResponseEntity createGoods(HttpServletRequest request, @RequestBody CreateGoodsRequest createGoodsRequest) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.createGoods(request, createGoodsRequest));
     }
     @PutMapping(value = "/goods")
     @Operation(summary="상품 수정", description="상품 수정 API")
-    public ResponseEntity updateGoods(@RequestBody Goods goods) throws Exception {
-        return commonUtils.okResponsePackaging(goodsService.updateGoods(goods));
+    public ResponseEntity updateGoods(HttpServletRequest request, @RequestBody UpdateGoodsRequest updateGoodsRequest) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.updateGoods(request, updateGoodsRequest));
     }
     @DeleteMapping(value = "/goods")
     @Operation(summary="상품 삭제", description="상품 삭제 API")
-    public ResponseEntity deleteGoods(@RequestBody Goods goods) throws Exception {
-        return commonUtils.okResponsePackaging(goodsService.deleteGoods(goods));
+    public ResponseEntity deleteGoods(HttpServletRequest request, @RequestParam String goodsCd) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.deleteGoods(request, goodsCd));
     }
 }

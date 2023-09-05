@@ -1,4 +1,4 @@
-package com.aswe.goods.model;
+package com.aswe.goods.model.entity;
 
 import com.aswe.common.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;

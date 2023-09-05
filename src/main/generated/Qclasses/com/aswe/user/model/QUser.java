@@ -29,7 +29,7 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath deleteRemark = _super.deleteRemark;
 
     //inherited
-    public final NumberPath<Long> deleteUserCd = _super.deleteUserCd;
+    public final StringPath deleteUserCd = _super.deleteUserCd;
 
     //inherited
     public final StringPath deleteYn = _super.deleteYn;
@@ -38,7 +38,7 @@ public class QUser extends EntityPathBase<User> {
     public final DateTimePath<java.time.LocalDateTime> insertDt = _super.insertDt;
 
     //inherited
-    public final NumberPath<Long> insertUserCd = _super.insertUserCd;
+    public final StringPath insertUserCd = _super.insertUserCd;
 
     public final ListPath<Auth, QAuth> roles = this.<Auth, QAuth>createList("roles", Auth.class, QAuth.class, PathInits.DIRECT2);
 
@@ -46,7 +46,7 @@ public class QUser extends EntityPathBase<User> {
     public final DateTimePath<java.time.LocalDateTime> updateDt = _super.updateDt;
 
     //inherited
-    public final NumberPath<Long> updateUserCd = _super.updateUserCd;
+    public final StringPath updateUserCd = _super.updateUserCd;
 
     public final StringPath userCd = createString("userCd");
 
