@@ -39,7 +39,7 @@ spring:
 
 logging:
   level:
-    root: warn
+    root: info
     org:
       hibernate:
         SQL: warn
@@ -47,10 +47,10 @@ logging:
           descriptor:
             sql: warn
 
-#SECRET KEY
+#SECRET KEY (환경변수로 변경필수!)
 jwt:
   secret:
-    key: aswe
+    key: aswemakekeysecret12345678903s5v8y/B?E(H+M 
 token:
   access-expired-time : 14400000
   refresh-expired-time : 2629800000

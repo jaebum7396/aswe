@@ -41,7 +41,7 @@ public class GoodsController {
         return commonUtils.okResponsePackaging(goodsService.createGoods(request, goodsRequest));
     }
     @PutMapping(value = "/goods")
-    @Operation(summary="상품 업데이트", description="상품 업데이트 API")
+    @Operation(summary="상품 수정", description="상품 수정 API")
     public ResponseEntity updateGoods(@RequestBody Goods goods) throws Exception {
         return commonUtils.okResponsePackaging(goodsService.updateGoods(goods));
     }
