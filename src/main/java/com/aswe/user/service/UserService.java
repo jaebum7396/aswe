@@ -1,8 +1,8 @@
 package com.aswe.user.service;
 
-import com.aswe.user.model.Auth;
-import com.aswe.user.model.SignupRequest;
-import com.aswe.user.model.User;
+import com.aswe.user.model.entity.Auth;
+import com.aswe.user.model.dto.SignupRequest;
+import com.aswe.user.model.entity.User;
 import com.aswe.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class UserService {
         User userEntity = signupRequest.toEntity();
         userEntity.setDeleteYn("N");
         //ROLE 설정
-        String userType = signupRequest.getUserType();
+        String userType = signupRequest.getUserType().toString();
         userEntity.setRoles(Collections.singletonList(Auth.builder().authType(userType).build()));
 
         userRepository.save(userEntity);

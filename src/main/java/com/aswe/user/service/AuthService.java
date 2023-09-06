@@ -1,5 +1,8 @@
 package com.aswe.user.service;
 
+import com.aswe.user.model.dto.LoginRequest;
+import com.aswe.user.model.entity.Auth;
+import com.aswe.user.model.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-public class CreateGoodsRequest extends GoodsRequest {
+public class CreateGoodsRequest extends GoodsDTO {
     public Goods toEntity() {
         Goods goods = super.toEntity();
         return goods;

@@ -1,5 +1,6 @@
-package com.aswe.user.model;
+package com.aswe.user.model.dto;
 
+import com.aswe.user.model.entity.User;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,12 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SignupRequest {
-    @ApiModelProperty(value="userId", example="mart", required=true)
+    @ApiModelProperty(value="userId", example="mart_test2", required=true)
     private String userId;
     @ApiModelProperty(value="userPw", example="mart1234", required=true)
     private String userPw;
-    @ApiModelProperty(value="userType", example="MART", required=true)
-    private String userType;
+    @ApiModelProperty(value="UserType", example="enum(MART,USER)", required=true)
+    private UserType userType;
 
     public User toEntity() {
         return User.builder()

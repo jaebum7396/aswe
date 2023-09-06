@@ -1,4 +1,4 @@
-package com.aswe.order.model;
+package com.aswe.order.model.entity;
 
 import com.aswe.common.model.BaseEntity;
 import lombok.*;

@@ -1,14 +1,14 @@
-package com.aswe.user.model;
+package com.aswe.user.model.dto;
 
+import com.aswe.user.model.entity.Auth;
+import com.aswe.user.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Builder

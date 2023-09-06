@@ -1,4 +1,4 @@
-package com.aswe.order.model;
+package com.aswe.order.model.entity;
 
 import com.aswe.common.model.BaseEntity;
 import com.aswe.goods.model.entity.Goods;
@@ -23,10 +23,9 @@ public class OrderDetail extends BaseEntity implements Serializable {
     @Column( name = "ORDER_DETAIL_CD")
     private String orderDetailCd;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "GOODS_CD")
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "GOODS_CD")
     private Goods goods;
 
-    @Column( name = "QUANTITY") @Builder.Default
-    private BigDecimal quantity = new BigDecimal("3000");
+    @Column( name = "QUANTITY")
+    private int quantity;
 }

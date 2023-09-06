@@ -1,4 +1,4 @@
-package com.aswe.user.model;
+package com.aswe.user.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -12,8 +12,8 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor
 @Builder
 public class LoginRequest {
-    @ApiModelProperty(value="userId", example="mart", required=true)
+    @ApiModelProperty(value="userId", example="test_mart", required=true)
     private String userId;
-    @ApiModelProperty(value="userPw", example="mart1234", required=true)
+    @ApiModelProperty(value="userPw", example="1", required=true)
     private String userPw;
 }

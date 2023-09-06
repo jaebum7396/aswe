@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.aswe.user.model.LoginRequest;
-import com.aswe.user.model.SignupRequest;
+import com.aswe.user.model.dto.LoginRequest;
+import com.aswe.user.model.dto.SignupRequest;
 import com.aswe.user.service.AuthService;
 import com.aswe.user.service.UserService;
 

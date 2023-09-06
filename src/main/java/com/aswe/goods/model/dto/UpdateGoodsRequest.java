@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-public class UpdateGoodsRequest extends GoodsRequest {
+public class UpdateGoodsRequest extends GoodsDTO {
     @ApiModelProperty(value="goodsCd", example="000000-0000-0000-0000-000000000000", required=true)
     private String goodsCd;
 

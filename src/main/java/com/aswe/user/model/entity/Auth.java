@@ -1,6 +1,5 @@
-package com.aswe.user.model;
+package com.aswe.user.model.entity;
 
-import com.aswe.common.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;

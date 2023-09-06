@@ -2,7 +2,7 @@ package com.aswe.goods.service;
 
 import com.aswe.common.CommonUtils;
 import com.aswe.common.exception.GoodsNotFoundException;
-import com.aswe.goods.model.dto.GoodsRequest;
+import com.aswe.goods.model.dto.GoodsDTO;
 import com.aswe.goods.model.dto.UpdateGoodsRequest;
 import com.aswe.goods.model.entity.Goods;
 import com.aswe.goods.model.entity.GoodsPrice;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -40,33 +39,33 @@ public class GoodsService {
         return resultMap;
     }
 
-    public Map<String, Object> createGoods(HttpServletRequest request, GoodsRequest createGoodsRequest) throws Exception {
+    public Map<String, Object> createGoods(HttpServletRequest request, GoodsDTO createGoodsDTO) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         Claims claim = commonUtils.getClaims(request);
         ArrayList<HashMap<String,String>> roles = claim.get("roles", ArrayList.class);
         roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
-        Goods goods = createGoodsRequest.toEntity();
+        Goods goods = createGoodsDTO.toEntity();
         goods.getGoodsPrices().get(0).setInsertUserCd(claim.getSubject());
         goods.setInsertUserCd(claim.getSubject());
         goodsRepository.save(goods);
         return resultMap;
     }
 
-    public Map<String, Object> updateGoods(HttpServletRequest request, GoodsRequest updateGoodsRequest) throws Exception {
+    public Map<String, Object> updateGoods(HttpServletRequest request, GoodsDTO updateGoodsDTO) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         Claims claim = commonUtils.getClaims(request);
         ArrayList<HashMap<String,String>> roles = claim.get("roles", ArrayList.class);
         roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
 
-        if(((UpdateGoodsRequest)updateGoodsRequest).getPrice().compareTo(new BigDecimal(0))<0){
+        if(((UpdateGoodsRequest) updateGoodsDTO).getPrice().compareTo(new BigDecimal(0))<0){
             throw new BadCredentialsException("가격은 0원 이상이어야 합니다.");
         }
-        Goods goods = goodsRepository.getGoods(((UpdateGoodsRequest)updateGoodsRequest).getGoodsCd()).orElseThrow(() -> new GoodsNotFoundException("상품이 존재하지 않습니다."));
+        Goods goods = goodsRepository.getGoods(((UpdateGoodsRequest) updateGoodsDTO).getGoodsCd()).orElseThrow(() -> new GoodsNotFoundException("상품이 존재하지 않습니다."));
 
-        goods.setGoodsNm(updateGoodsRequest.getGoodsNm());
+        goods.setGoodsNm(updateGoodsDTO.getGoodsNm());
         goods.addGoodsPrice(GoodsPrice.builder()
                 .goods(goods)
-                .goodsPrice(((UpdateGoodsRequest)updateGoodsRequest).getPrice())
+                .goodsPrice(((UpdateGoodsRequest) updateGoodsDTO).getPrice())
                 .insertUserCd(claim.getSubject())
                 .build());
         goods.setUpdateUserCd(claim.getSubject());

@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GoodsRequest {
-    @ApiModelProperty(value="goodsNm", example="test_goods")
+public class GoodsDTO {
+    @ApiModelProperty(value="goodsNm", example="test_goods3")
     private String goodsNm;
     @ApiModelProperty(value="price", example="10000")
     private BigDecimal price;
