@@ -45,7 +45,6 @@ public class UserService {
         userEntity.setRoles(Collections.singletonList(Auth.builder().authType(userType).build()));
 
         userRepository.save(userEntity);
-
         return resultMap;
     }
 }

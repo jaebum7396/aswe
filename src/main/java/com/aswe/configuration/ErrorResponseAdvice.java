@@ -1,10 +1,12 @@
 package com.aswe.configuration;
 
+import com.aswe.common.exception.GoodsNotFoundException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -49,5 +51,27 @@ public class ErrorResponseAdvice {
 				.message("로그인 시간이 만료되었습니다.")
 				.result(resultMap).build();
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseResult);
+	}
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity handleHttpMessageNotReadableException(HttpMessageNotReadableException  e) {
+		Response responseResult;
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		e.printStackTrace();
+		responseResult = Response.builder()
+				.message("올바른 요청 포맷이 아닙니다.")
+				.result(resultMap).build();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseResult);
+	}
+
+	@ExceptionHandler(GoodsNotFoundException.class)
+	public ResponseEntity handleGoodsNotFoundException(GoodsNotFoundException e) {
+		Response responseResult;
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		e.printStackTrace();
+		responseResult = Response.builder()
+				.message(e.getMessage())
+				.result(resultMap).build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseResult);
 	}
 }

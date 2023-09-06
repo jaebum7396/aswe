@@ -1,7 +1,7 @@
 package com.aswe.common;
 
 import com.aswe.common.model.Response;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.aswe.configuration.JacksonConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -12,13 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Enumeration;
@@ -37,12 +34,6 @@ public class CommonUtils {
                 .message("요청 성공")
                 .result(result).build();
         return ResponseEntity.ok().body(response);
-    }
-
-    // objectMapper 는 전역으로 두고 쓴다 - 생성 비용이 비싸기때문
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    public static ObjectMapper getObjectMapper() {
-        return objectMapper;
     }
 
     public Claims getClaims(HttpServletRequest request){
@@ -79,7 +70,7 @@ public class CommonUtils {
         String strReturn = "";
         try {
             if (p_obj != null) {
-                strReturn = CommonUtils.getString(CommonUtils.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(p_obj));
+                strReturn = CommonUtils.getString(JacksonConfig.objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(p_obj));
             }
         } catch (Exception e) {
             log.debug("{}", e.toString());

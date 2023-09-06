@@ -28,8 +28,7 @@ public class Goods extends BaseEntity implements Serializable {
     @Column( name = "GOODS_NM")
     private String goodsNm;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
-    @JoinColumn(name = "GOODS_CD")
+    @OneToMany(mappedBy = "goods", fetch = FetchType.EAGER, cascade = CascadeType.ALL) @Builder.Default
     private List<GoodsPrice> goodsPrices = new ArrayList<>();
 
     public void addGoodsPrice(GoodsPrice goodsPrice) {

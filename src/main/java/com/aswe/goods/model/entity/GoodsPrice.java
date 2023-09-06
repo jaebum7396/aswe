@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -32,4 +29,9 @@ public class GoodsPrice extends BaseEntity implements Serializable {
 
     @Column(name = "GOODS_PRICE", nullable = true)
     private BigDecimal goodsPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "GOODS_CD")
+    @JsonIgnore
+    private Goods goods;
 }

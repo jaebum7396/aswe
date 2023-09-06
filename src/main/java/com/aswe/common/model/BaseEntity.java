@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity {
     @CreatedDate
     @Column(nullable = false, updatable = false, name = "INSERT_DT")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @JsonIgnore
     private LocalDateTime insertDt;
 
@@ -36,7 +35,6 @@ public abstract class BaseEntity {
 
     @LastModifiedDate
     @Column(name = "UPDATE_DT")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @JsonIgnore
     private LocalDateTime updateDt;
 
@@ -51,7 +49,6 @@ public abstract class BaseEntity {
     private String deleteYn = "N";
 
     @Column(name = "DELETE_DT")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     @JsonIgnore
     private LocalDateTime deleteDt;
 

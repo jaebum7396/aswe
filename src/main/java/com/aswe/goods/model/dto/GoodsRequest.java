@@ -23,6 +23,7 @@ public class GoodsRequest {
                 .goodsNm(goodsNm)
                 .build();
         goods.addGoodsPrice(GoodsPrice.builder()
+                .goods(goods)
                 .goodsPrice(price)
                 .build());
         return goods;

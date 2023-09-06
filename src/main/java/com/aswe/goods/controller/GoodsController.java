@@ -26,13 +26,13 @@ public class GoodsController {
     @Autowired CommonUtils commonUtils;
     @GetMapping(value = "/goods")
     @Operation(summary="상품 조회", description="상품 조회 API")
-    public ResponseEntity searchGoods(@RequestParam String goodsCd) throws Exception {
-        return commonUtils.okResponsePackaging(goodsService.searchGoods(goodsCd));
+    public ResponseEntity getGoods(@RequestParam String goodsCd) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.getGoods(goodsCd));
     }
     @GetMapping(value = "/goods/price")
     @Operation(summary="상품 금액 조회", description="상품 금액 조회 API")
-    public ResponseEntity searchGoodsPrice(@RequestParam String goodsCd, @RequestParam LocalDateTime insertDT) throws Exception {
-        return commonUtils.okResponsePackaging(goodsService.searchGoodsPrice(goodsCd, insertDT));
+    public ResponseEntity getGoodsPrice(@RequestParam String goodsCd, @RequestParam String insertDT) throws Exception {
+        return commonUtils.okResponsePackaging(goodsService.getGoodsPrice(goodsCd, insertDT));
     }
     @PostMapping(value = "/goods")
     @Operation(summary="상품 생성", description="상품 생성 API")
