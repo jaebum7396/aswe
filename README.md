@@ -6,6 +6,7 @@ Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle, JUNIT
 * 이후 빌드 한 뒤 메인 메서드 실행
 
 ### 구현기능
+![캡처](https://github.com/jaebum7396/aswe/assets/38182229/31cae4f1-5111-4f73-8986-43f8ee8cd1b1)
 
 
 ### 서비스 요구사항
