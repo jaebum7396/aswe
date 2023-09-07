@@ -1,6 +1,7 @@
 package com.aswe.configuration;
 
-import com.aswe.common.exception.GoodsNotFoundException;
+import com.aswe.common.exception.CalculateConsistencyException;
+import com.aswe.common.exception.NotFoundException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,8 +65,8 @@ public class ErrorResponseAdvice {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseResult);
 	}
 
-	@ExceptionHandler(GoodsNotFoundException.class)
-	public ResponseEntity handleGoodsNotFoundException(GoodsNotFoundException e) {
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity handleNotFoundException(NotFoundException e) {
 		Response responseResult;
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		e.printStackTrace();
@@ -73,5 +74,16 @@ public class ErrorResponseAdvice {
 				.message(e.getMessage())
 				.result(resultMap).build();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseResult);
+	}
+
+	@ExceptionHandler(CalculateConsistencyException.class)
+	public ResponseEntity handleCalculateConsistencyException(CalculateConsistencyException e) {
+		Response responseResult;
+		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+		e.printStackTrace();
+		responseResult = Response.builder()
+				.message(e.getMessage())
+				.result(resultMap).build();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseResult);
 	}
 }

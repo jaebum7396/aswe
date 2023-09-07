@@ -20,4 +20,6 @@ public class CreateOrderRequest {
     ArrayList<OrderDetailDTO> orderDetailList;
     @ApiModelProperty(example="2500")
     private BigDecimal deliveryPrice;
+    @ApiModelProperty(example="1", required = false)
+    private String couponCd;
 }

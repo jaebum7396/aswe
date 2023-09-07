@@ -28,4 +28,13 @@ public class OrderDetail extends BaseEntity implements Serializable {
 
     @Column( name = "QUANTITY")
     private int quantity;
+
+    @Column( name = "GOODS_PRICE") //해당 상품 가격의 합(상품x수량)
+    private BigDecimal goodsPrice;
+
+    @Column( name = "DISCOUNT_PRICE") @Builder.Default //할인 금액
+    private BigDecimal discountPrice = new BigDecimal(0);
+
+    @Column( name = "PAY_PRICE") //실제 결제해야되는 금액(해당 상품 가격의 합 - 할인 금액)
+    private BigDecimal payPrice;
 }
