@@ -30,22 +30,3 @@ Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle, JUNIT
 
 #### 테스트 코드 -> GoodsControllerTest, OrderControllerTest 
 #### 이외 *swagger 를 구성하여 테스트 가능토록 하였습니다
-
-
-### 필수 데이터
-
-- 상품 (TB_GOODS)
-  - 상품명(GOODS_NM)
-  - 가격(TB_GOODS_PRICE.GOODS_PRICE)
-- 쿠폰 (TB_COUPON)
-  - 쿠폰 적용 방법 (COUPON_TYPE)
-    - 비율(RATE) / 고정(FIX) 
-    - 각 적용 방법에 따른 적용 비율 / 적용 금액 (DISCOUNT)
-  - 쿠폰 적용 범위
-    - 주문 전체 (배달비 제외)
-    - 특정 상품 한정 (특정 상품의 모든 개수에 적용) (GOODS_CD)
-- 주문 (TB_ORDER)
-  - 주문 목록 (TB_ORDER_DETAIL)
-    - 상품 (GOODS_CD)
-    - 개수 (QUANTITY)
-  - 배달비 (DELIVERY_PRICE)
