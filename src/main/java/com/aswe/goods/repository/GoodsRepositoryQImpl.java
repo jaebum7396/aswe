@@ -29,17 +29,18 @@ public class GoodsRepositoryQImpl implements GoodsRepositoryQ {
         QGoodsPrice goodsPrice = QGoodsPrice.goodsPrice1;
 
         // Subquery to find the most recent insertDt for the given goodsCd
-        SubQueryExpression<LocalDateTime> mostRecentInsertDt = JPAExpressions
-                .select(goodsPrice.insertDt.max())
+        SubQueryExpression<String> subCurrentGoodsPriceCd = JPAExpressions
+                .select(goodsPrice.goodsPriceCd)
                 .from(goodsPrice)
-                .where(goodsPrice.goods.goodsCd.eq(goodsCd));
+                .where(goodsPrice.goods.goodsCd.eq(goodsCd))
+                .where(goodsPrice.currentPriceYn.eq("Y"));
 
         Goods goodsEntity = queryFactory
                 .selectFrom(goods)
                 .leftJoin(goods.goodsPrices, goodsPrice).fetchJoin()
                 .where(goods.goodsCd.eq(goodsCd))
                 .where(goods.deleteYn.eq("N"))
-                .where(goodsPrice.insertDt.eq(mostRecentInsertDt))
+                .where(goodsPrice.goodsPriceCd.eq(subCurrentGoodsPriceCd))
                 .fetchFirst();
 
         return Optional.ofNullable(goodsEntity);

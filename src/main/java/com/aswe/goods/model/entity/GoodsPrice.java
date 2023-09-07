@@ -30,6 +30,10 @@ public class GoodsPrice extends BaseEntity implements Serializable {
     @Column(name = "GOODS_PRICE", nullable = true)
     private BigDecimal goodsPrice;
 
+    @Column(name = "CURRENT_PRICE_YN", nullable = true) // 현재가 여부
+    @JsonIgnore
+    private String currentPriceYn;
+
     @ManyToOne
     @JoinColumn(name = "GOODS_CD")
     @JsonIgnore

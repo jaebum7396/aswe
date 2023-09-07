@@ -33,14 +33,18 @@ public class OrderController {
     public ResponseEntity createOrder(HttpServletRequest request, @RequestBody CreateOrderRequest createOrderRequest) throws Exception {
         return commonUtils.okResponsePackaging(orderService.createOrder(request, createOrderRequest));
     }
-    /*@PutMapping(value = "/order")
+    /*
+    @PutMapping(value = "/order")
     @Operation(summary="주문 업데이트", description="주문 업데이트 API")
     public ResponseEntity updateOrder(@RequestBody Order order) throws Exception {
         return commonUtils.okResponsePackaging(orderService.updateOrder(order));
-    }*/
-   /* @DeleteMapping(value = "/order")
+    }
+    */
+    /*
+    @DeleteMapping(value = "/order")
     @Operation(summary="주문 삭제", description="주문 삭제 API")
     public ResponseEntity deleteOrder(@RequestBody Order order) throws Exception {
         return commonUtils.okResponsePackaging(orderService.deleteOrder(order));
-    }*/
+    }
+    */
 }

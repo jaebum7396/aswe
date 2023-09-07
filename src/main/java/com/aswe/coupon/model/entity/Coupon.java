@@ -3,6 +3,7 @@ package com.aswe.coupon.model.entity;
 import com.aswe.common.model.BaseEntity;
 import com.aswe.coupon.model.dto.CouponType;
 import com.aswe.goods.model.entity.Goods;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
@@ -36,6 +37,6 @@ public class Coupon extends BaseEntity implements Serializable {
     private BigDecimal discount;
 
     //적용 가능한 상품(없을 시에는 주문 전체에 적용)
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "GOODS_CD")
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "GOODS_CD") @JsonIgnore
     private Goods applicableGoods;
 }

@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class UpdateGoodsRequest extends GoodsDTO {
-    @ApiModelProperty(value="goodsCd", example="000000-0000-0000-0000-000000000000", required=true)
+    @ApiModelProperty(value="goodsCd", example="2", required=true)
     private String goodsCd;
 
     public Goods toEntity() {

@@ -1,7 +1,9 @@
 package com.aswe.order.model.entity;
 
 import com.aswe.common.model.BaseEntity;
+import com.aswe.coupon.model.entity.Coupon;
 import com.aswe.goods.model.entity.Goods;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +26,7 @@ public class OrderDetail extends BaseEntity implements Serializable {
     private String orderDetailCd;
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "GOODS_CD")
+    @JsonInclude(JsonInclude.Include.NON_NULL) // null인 경우 필드를 제외
     private Goods goods;
 
     @Column( name = "QUANTITY")
@@ -37,4 +40,8 @@ public class OrderDetail extends BaseEntity implements Serializable {
 
     @Column( name = "PAY_PRICE") //실제 결제해야되는 금액(해당 상품 가격의 합 - 할인 금액)
     private BigDecimal payPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "COUPON_CD")
+    @JsonInclude(JsonInclude.Include.NON_NULL) // null인 경우 필드를 제외
+    private Coupon coupon;
 }

@@ -34,8 +34,6 @@ public class CouponService {
 
     /*public Map<String, Object> getCoupon(String goodsCd) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        Coupon goods = goodsRepository.getCoupon(goodsCd).orElseThrow(() -> new CouponNotFoundException("상품이 존재하지 않습니다."));
-        resultMap.put("goods", goods);
         return resultMap;
     }*/
 
@@ -64,7 +62,8 @@ public class CouponService {
                 throw new CalculateConsistencyException("할인율이 0% 미만입니다.");
             }
         }
-        couponRepository.save(coupon);
+        coupon = couponRepository.save(coupon);
+        resultMap.put("coupon", coupon);
         return resultMap;
     }
 }

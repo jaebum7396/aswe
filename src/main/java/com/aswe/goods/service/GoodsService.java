@@ -46,8 +46,10 @@ public class GoodsService {
         roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
         Goods goods = createGoodsDTO.toEntity();
         goods.getGoodsPrices().get(0).setInsertUserCd(claim.getSubject());
+        goods.getGoodsPrices().get(0).setCurrentPriceYn("Y");
         goods.setInsertUserCd(claim.getSubject());
         goodsRepository.save(goods);
+        resultMap.put("goods", goods);
         return resultMap;
     }
 
@@ -63,13 +65,21 @@ public class GoodsService {
         Goods goods = goodsRepository.getGoods(((UpdateGoodsRequest) updateGoodsDTO).getGoodsCd()).orElseThrow(() -> new NotFoundException("상품이 존재하지 않습니다."));
 
         goods.setGoodsNm(updateGoodsDTO.getGoodsNm());
-        goods.addGoodsPrice(GoodsPrice.builder()
+        goods.getGoodsPrices().forEach(goodsPrice -> { //이전 가격들의 현재가 여부를 N으로 변경
+            goodsPrice.setCurrentPriceYn("N");
+            goodsPrice.setUpdateUserCd(claim.getSubject());
+        });
+        ArrayList<GoodsPrice> goodsPrices = new ArrayList<GoodsPrice>();
+        goodsPrices.add(GoodsPrice.builder()
                 .goods(goods)
                 .goodsPrice(((UpdateGoodsRequest) updateGoodsDTO).getPrice())
+                .currentPriceYn("Y")
                 .insertUserCd(claim.getSubject())
                 .build());
+        goods.setGoodsPrices(goodsPrices);
         goods.setUpdateUserCd(claim.getSubject());
         goodsRepository.save(goods);
+        resultMap.put("goods", goods);
         return resultMap;
     }
 

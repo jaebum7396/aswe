@@ -13,9 +13,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GoodsDTO {
-    @ApiModelProperty(value="goodsNm", example="test_goods3")
+    @ApiModelProperty(value="goodsNm", example="test_goods")
     private String goodsNm;
-    @ApiModelProperty(value="price", example="10000")
+    @ApiModelProperty(value="price", example="12300")
     private BigDecimal price;
 
     public Goods toEntity() {

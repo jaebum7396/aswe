@@ -28,7 +28,7 @@ public class Goods extends BaseEntity implements Serializable {
     @Column( name = "GOODS_NM")
     private String goodsNm;
 
-    @OneToMany(mappedBy = "goods", fetch = FetchType.EAGER, cascade = CascadeType.ALL) @Builder.Default
+    @OneToMany(mappedBy = "goods", fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
     private List<GoodsPrice> goodsPrices = new ArrayList<>();
 
     public void addGoodsPrice(GoodsPrice goodsPrice) {
