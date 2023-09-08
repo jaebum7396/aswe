@@ -2,7 +2,7 @@
 Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle
 
 ### 실행방법
-* [H2 Database](https://www.h2database.com/html/main.html)설치가 필요합니다!
+* [H2 Database](https://www.h2database.com/html/main.html) 설치가 필요합니다!
 * 이후 빌드 한 뒤 메인 메서드 실행
 
 ### 구현기능
