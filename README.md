@@ -1,5 +1,5 @@
 ### 구현스펙
-Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle
+Java 11, Spring Boot 2.7.8, JPA, QueryDSL, H2, Gradle
 
 ### 실행방법
 * [H2 Database](https://www.h2database.com/html/main.html) 설치가 필요합니다!
