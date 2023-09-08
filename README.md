@@ -18,7 +18,7 @@ Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle
 #### 3. 상품을 생성할 수 있다. ✔  
 - MART 권한 유저만 가능하도록 구현하였습니다. 
 #### 4. 상품 가격을 수정할 수 있다. ✔  
-- MART 권한 유저만 가능하도록 구현하였습니다. 
+- MART 권한 유저만 가능하도록 구현하였고 상품 가격에 한해 물리적 수정이 아닌 논리 수정으로 구현하였습니다.(가격 히스토리를 위해 TB_GOODS_PRICE 테이블에 INSERT하고 MAIN_PRICE 한행을 가격으로 가져오도록)
 #### 5. 특정 시점의 상품 가격을 조회할 수 있다. ✔  
 - (String goodsCd, String insertDt("yyyy-MM-dd hh:mm:ss"))
 #### 6. 상품을 삭제할 수 있다. ✔  
