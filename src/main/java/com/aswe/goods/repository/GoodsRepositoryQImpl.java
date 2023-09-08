@@ -28,13 +28,14 @@ public class GoodsRepositoryQImpl implements GoodsRepositoryQ {
         QGoods goods = QGoods.goods;
         QGoodsPrice goodsPrice = QGoodsPrice.goodsPrice1;
 
-        // Subquery to find the most recent insertDt for the given goodsCd
+        // Subquery를 사용하여 주어진 goodsCd에 대한 가장 최근의 insertDt를 찾습니다.
         SubQueryExpression<String> subCurrentGoodsPriceCd = JPAExpressions
                 .select(goodsPrice.goodsPriceCd)
                 .from(goodsPrice)
                 .where(goodsPrice.goods.goodsCd.eq(goodsCd))
                 .where(goodsPrice.currentPriceYn.eq("Y"));
 
+        // 주어진 goodsCd에 대한 Goods 엔티티를 조회합니다.
         Goods goodsEntity = queryFactory
                 .selectFrom(goods)
                 .leftJoin(goods.goodsPrices, goodsPrice).fetchJoin()
@@ -53,6 +54,7 @@ public class GoodsRepositoryQImpl implements GoodsRepositoryQ {
         QGoods goods = QGoods.goods;
         QGoodsPrice goodsPrice = QGoodsPrice.goodsPrice1;
 
+        // 주어진 goodsCd 및 insertDT에 해당하는 Goods 엔티티를 조회합니다.
         Goods goodsEntity = queryFactory
                 .selectFrom(goods)
                 .leftJoin(goods.goodsPrices, goodsPrice).fetchJoin()

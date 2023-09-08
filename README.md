@@ -29,4 +29,4 @@ Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle, JUNIT
 - 제품별 쿠폰 및 할인 반영 상황은 TB_ORDER_DETAIL 테이블에 저장토록, 종합 쿠폰 및 할인 반영 상황은 TB_ORDER 테이블에 저장토록 구현하였습니다.
 
 #### 테스트 코드 -> GoodsControllerTest, OrderControllerTest 
-#### 이외 *swagger 를 구성하여 요청 테스트 가능토록 하였습니다
+##### 이외 *swagger 를 구성하여 요청 테스트 가능토록 하였습니다

@@ -25,12 +25,15 @@ public class Goods extends BaseEntity implements Serializable {
     @JsonIgnore
     private String goodsCd;
 
+    // 상품 이름
     @Column( name = "GOODS_NM")
     private String goodsNm;
 
+    // 상품 가격 목록 (Lazy 로딩)
     @OneToMany(mappedBy = "goods", fetch = FetchType.LAZY, cascade = CascadeType.ALL) @Builder.Default
     private List<GoodsPrice> goodsPrices = new ArrayList<>();
 
+    // GoodsPrice 객체를 상품에 추가하는 메서드
     public void addGoodsPrice(GoodsPrice goodsPrice) {
         this.goodsPrices.add(goodsPrice);
     }

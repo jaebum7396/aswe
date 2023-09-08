@@ -27,6 +27,7 @@ public class GoodsService {
 
     public Map<String, Object> getGoods(String goodsCd) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        // 주어진 goodsCd에 해당하는 상품을 조회합니다.
         Goods goods = goodsRepository.getGoods(goodsCd).orElseThrow(() -> new NotFoundException("상품이 존재하지 않습니다."));
         resultMap.put("goods", goods);
         return resultMap;
@@ -34,6 +35,7 @@ public class GoodsService {
 
     public Map<String, Object> getGoodsPrice(String goodsCd, String insertDT) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        // 주어진 goodsCd와 insertDT에 해당하는 상품을 조회합니다.
         Goods goods = goodsRepository.getGoodsPrice(goodsCd, insertDT).orElseThrow(() -> new NotFoundException("상품이 존재하지 않습니다."));
         resultMap.put("goods", goods);
         return resultMap;
@@ -42,13 +44,16 @@ public class GoodsService {
     public Map<String, Object> createGoods(HttpServletRequest request, GoodsDTO createGoodsDTO) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         Claims claim = commonUtils.getClaims(request);
-        ArrayList<HashMap<String,String>> roles = claim.get("roles", ArrayList.class);
+        ArrayList<HashMap<String, String>> roles = claim.get("roles", ArrayList.class);
         roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
+
+        // 새로운 상품을 생성하고 저장합니다.
         Goods goods = createGoodsDTO.toEntity();
         goods.getGoodsPrices().get(0).setInsertUserCd(claim.getSubject());
         goods.getGoodsPrices().get(0).setCurrentPriceYn("Y");
         goods.setInsertUserCd(claim.getSubject());
         goodsRepository.save(goods);
+
         resultMap.put("goods", goods);
         return resultMap;
     }
@@ -56,17 +61,14 @@ public class GoodsService {
     public Map<String, Object> updateGoods(HttpServletRequest request, GoodsDTO updateGoodsDTO) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         Claims claim = commonUtils.getClaims(request);
-        ArrayList<HashMap<String,String>> roles = claim.get("roles", ArrayList.class);
+        ArrayList<HashMap<String, String>> roles = claim.get("roles", ArrayList.class);
         roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
 
-        if(((UpdateGoodsRequest) updateGoodsDTO).getPrice().compareTo(new BigDecimal(0))<0){
-            throw new BadCredentialsException("가격은 0원 이상이어야 합니다.");
-        }
+        // 업데이트할 상품을 조회하고, 상품 정보를 업데이트합니다.
         Goods goods = goodsRepository.getGoods(((UpdateGoodsRequest) updateGoodsDTO).getGoodsCd()).orElseThrow(() -> new NotFoundException("상품이 존재하지 않습니다."));
-
         goods.setGoodsNm(updateGoodsDTO.getGoodsNm());
-        goods.getGoodsPrices().forEach(goodsPrice -> { //이전 가격들의 현재가 여부를 N으로 변경
-            goodsPrice.setCurrentPriceYn("N");
+        goods.getGoodsPrices().forEach(goodsPrice -> {
+            goodsPrice.setCurrentPriceYn("N"); // 이전 가격들의 현재가 여부를 N으로 변경
             goodsPrice.setUpdateUserCd(claim.getSubject());
         });
         ArrayList<GoodsPrice> goodsPrices = new ArrayList<GoodsPrice>();
@@ -79,6 +81,7 @@ public class GoodsService {
         goods.setGoodsPrices(goodsPrices);
         goods.setUpdateUserCd(claim.getSubject());
         goodsRepository.save(goods);
+
         resultMap.put("goods", goods);
         return resultMap;
     }
@@ -86,14 +89,15 @@ public class GoodsService {
     public Map<String, Object> deleteGoods(HttpServletRequest request, String goodsCd) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         Claims claim = commonUtils.getClaims(request);
-        ArrayList<HashMap<String,String>> roles = claim.get("roles", ArrayList.class);
+        ArrayList<HashMap<String, String>> roles = claim.get("roles", ArrayList.class);
         roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
 
+        // 상품을 삭제 처리합니다.
         Goods goods = goodsRepository.getGoods(goodsCd).orElseThrow(() -> new NotFoundException("상품이 존재하지 않습니다."));
-
         goods.setDeleteYn("Y");
         goods.setDeleteUserCd(claim.getSubject());
         goodsRepository.save(goods);
+
         return resultMap;
     }
 }

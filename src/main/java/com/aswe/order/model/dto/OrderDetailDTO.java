@@ -12,8 +12,11 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class OrderDetailDTO {
+    // 상품 코드
     @ApiModelProperty(example="1")
     private String goodsCd;
+
+    // 주문 수량
     @ApiModelProperty(example="1")
     private int quantity;
 }

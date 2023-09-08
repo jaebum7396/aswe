@@ -36,6 +36,7 @@ public class OrderService {
 
     public Map<String, Object> searchOrder(String orderCd) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        // 주문을 조회하고 결과를 resultMap에 저장
         Order order = orderRepository.findById(orderCd).orElseThrow(() -> new NotFoundException("주문이 존재하지 않습니다."));
         resultMap.put("order", order);
         return resultMap;
@@ -43,6 +44,7 @@ public class OrderService {
 
     public Map<String, Object> createOrder(HttpServletRequest request, CreateOrderRequest createOrderRequest) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        // 사용자 클레임을 가져오고 사용자 코드를 추출
         Claims claim = commonUtils.getClaims(request);
         String userCd = claim.getSubject();
 
@@ -52,19 +54,19 @@ public class OrderService {
         Coupon applicateCoupon = null;
         boolean goodsCouponFlag = false;
         Goods applicableGoods = null;
-        if (createOrderRequest.getCouponCd() != null) { //요청에 쿠폰코드가 있을때
+        if (createOrderRequest.getCouponCd() != null) { // 쿠폰 코드가 주어진 경우
             applicateCouponOpt = couponRepository.findById(createOrderRequest.getCouponCd());
             applicateCoupon = applicateCouponOpt.orElseThrow(() -> new NotFoundException("적용하려는 쿠폰이 존재하지 않습니다."));
             Optional<Goods> applicableGoodsOpt = Optional.ofNullable(applicateCoupon.getApplicableGoods());
-            if (applicableGoodsOpt.isPresent()) { //특정 상품 한정 (특정 상품의 모든 개수에 적용) 쿠폰
+            if (applicableGoodsOpt.isPresent()) { // 특정 상품 한정 쿠폰인 경우
                 goodsCouponFlag = true;
                 applicableGoods = applicableGoodsOpt.get();
             }
         }
 
         List<OrderDetailDTO> orderDetailDTOList = createOrderRequest.getOrderDetailList().stream()
-            .filter(orderDetailDTO -> orderDetailDTO.getQuantity() > 0) //유효한 orderDetail(금액이 0원 이상인 것)
-            .collect(Collectors.toList());
+                .filter(orderDetailDTO -> orderDetailDTO.getQuantity() > 0) // 유효한 orderDetail(금액이 0원 이상인 것)
+                .collect(Collectors.toList());
 
         BigDecimal totalGoodsPrice = new BigDecimal(0);
         BigDecimal totalDiscountPrice = new BigDecimal(0);
@@ -80,14 +82,14 @@ public class OrderService {
                     .goods(goods)
                     .quantity(orderDetailDTO.getQuantity());
 
-            if(goodsCouponFlag){ //특정 상품 한정 쿠폰이 존재하는 경우
-                if(applicableGoods.getGoodsCd().equals(orderDetailDTO.getGoodsCd())){//쿠폰이 적용되는 상품인 경우
-                    if(applicateCoupon.getCouponType().equals(String.valueOf(CouponType.RATE))){ //퍼센트 쿠폰
+            if(goodsCouponFlag){ // 특정 상품 한정 쿠폰이 존재하는 경우
+                if(applicableGoods.getGoodsCd().equals(orderDetailDTO.getGoodsCd())){ // 쿠폰이 적용되는 상품인 경우
+                    if(applicateCoupon.getCouponType().equals(String.valueOf(CouponType.RATE))){ // 퍼센트 쿠폰
                         discountPrice = goodsPrice.multiply(applicateCoupon.getDiscount()).divide(new BigDecimal(100));
-                    }else if(applicateCoupon.getCouponType().equals(String.valueOf(CouponType.FIX))){ //고정 쿠폰
+                    }else if(applicateCoupon.getCouponType().equals(String.valueOf(CouponType.FIX))){ // 고정 쿠폰
                         discountPrice = applicateCoupon.getDiscount();
                     }
-                    orderDetailBuilder.coupon(applicateCoupon); //orderDetail에 쿠폰 추가
+                    orderDetailBuilder.coupon(applicateCoupon); // orderDetail에 쿠폰 추가
                 }
             }
 
@@ -98,14 +100,11 @@ public class OrderService {
                     .payPrice(payPrice)
                     .insertUserCd(userCd)
                     .deleteYn("N");
-            orderDetailList.add(orderDetailBuilder.build()); //orderDetailList에 추가
+            orderDetailList.add(orderDetailBuilder.build()); // orderDetailList에 추가
 
             totalGoodsPrice = totalGoodsPrice.add(goodsPrice);
             totalDiscountPrice = totalDiscountPrice.add(discountPrice);
             totalPayPrice = totalPayPrice.add(payPrice);
-            //System.out.println("totalGoodsPrice : " + totalGoodsPrice);
-            //System.out.println("totalDiscountPrice : " + totalDiscountPrice);
-            //System.out.println("totalPayPrice : " + totalPayPrice);
         }
 
         Order.OrderBuilder orderBuilder = Order.builder()
@@ -114,10 +113,10 @@ public class OrderService {
                 .insertUserCd(userCd)
                 .deleteYn("N");
 
-        if(applicateCouponOpt.isPresent()&&!goodsCouponFlag){ //쿠폰이 존재하고, 특정 상품 한정 쿠폰이 아닌 경우
-            if(applicateCoupon.getCouponType().equals(String.valueOf(CouponType.RATE))){ //퍼센트 쿠폰
+        if(applicateCouponOpt.isPresent()&&!goodsCouponFlag){ // 쿠폰이 존재하고, 특정 상품 한정 쿠폰이 아닌 경우
+            if(applicateCoupon.getCouponType().equals(String.valueOf(CouponType.RATE))){ // 퍼센트 쿠폰
                 totalDiscountPrice = totalGoodsPrice.multiply(applicateCoupon.getDiscount()).divide(new BigDecimal(100));
-            }else if(applicateCoupon.getCouponType().equals(String.valueOf(CouponType.FIX))){ //고정 쿠폰
+            }else if(applicateCoupon.getCouponType().equals(String.valueOf(CouponType.FIX))){ // 고정 쿠폰
                 totalDiscountPrice = applicateCoupon.getDiscount();
             }
             totalPayPrice = totalGoodsPrice.subtract(totalDiscountPrice);
@@ -129,7 +128,7 @@ public class OrderService {
                 .totalDiscountPrice(totalDiscountPrice)
                 .totalPayPrice(totalPayPrice.add(createOrderRequest.getDeliveryPrice()));
 
-        Order order = orderRepository.save(orderBuilder.build()); //order 저장
+        Order order = orderRepository.save(orderBuilder.build()); // order 저장
         resultMap.put("order", order);
         return resultMap;
     }

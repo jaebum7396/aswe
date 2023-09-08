@@ -32,36 +32,44 @@ public class CouponService {
     @Autowired GoodsRepository goodsRepository;
     @Autowired CommonUtils commonUtils;
 
-    /*public Map<String, Object> getCoupon(String goodsCd) throws Exception {
-        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        return resultMap;
-    }*/
-
+    // 쿠폰 생성 메서드
     public Map<String, Object> createCoupon(HttpServletRequest request, CreateCouponRequest createCouponRequest) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+
+        // JWT에서 클레임을 추출
         Claims claim = commonUtils.getClaims(request);
-        ArrayList<HashMap<String,String>> roles = claim.get("roles", ArrayList.class);
+        ArrayList<HashMap<String, String>> roles = claim.get("roles", ArrayList.class);
+
+        // 현재 유저가 'MART' 권한을 가졌는지 확인
         roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
 
+        // CreateCouponRequest를 Coupon 엔티티로 변환
         Coupon coupon = createCouponRequest.toEntity();
 
-        if(createCouponRequest.getGoodsCd()!=null){
+        if (createCouponRequest.getGoodsCd() != null) {
             String goodsCd = createCouponRequest.getGoodsCd();
             Goods goods = goodsRepository.getGoods(goodsCd).orElseThrow(() -> new NotFoundException("상품이 존재하지 않습니다."));
-            if(coupon.getCouponType().equals(String.valueOf(CouponType.FIX))){
-                if(goods.getGoodsPrices().get(0).getGoodsPrice().compareTo(coupon.getDiscount())<0){
+
+            if (coupon.getCouponType().equals(String.valueOf(CouponType.FIX))) {
+                // 고정 할인 쿠폰의 경우 할인 금액이 상품 가격보다 큰지 확인
+                if (goods.getGoodsPrices().get(0).getGoodsPrice().compareTo(coupon.getDiscount()) < 0) {
                     throw new CalculateConsistencyException("할인 금액이 상품 가격보다 큽니다.");
                 }
             }
+
             coupon.setApplicableGoods(goods);
         }
-        if(coupon.getCouponType().equals(String.valueOf(CouponType.RATE))){
-            if(coupon.getDiscount().compareTo(new BigDecimal(100))>0){
+
+        if (coupon.getCouponType().equals(String.valueOf(CouponType.RATE))) {
+            // 할인율이 상품가액의 100%를 초과하는지 확인
+            if (coupon.getDiscount().compareTo(new BigDecimal(100)) > 0) {
                 throw new CalculateConsistencyException("할인율이 100%를 초과합니다.");
-            }else if(coupon.getDiscount().compareTo(new BigDecimal(0))<0){
+            } else if (coupon.getDiscount().compareTo(new BigDecimal(0)) < 0) {
                 throw new CalculateConsistencyException("할인율이 0% 미만입니다.");
             }
         }
+
+        // 쿠폰을 저장하고 결과를 resultMap에 추가
         coupon = couponRepository.save(coupon);
         resultMap.put("coupon", coupon);
         return resultMap;

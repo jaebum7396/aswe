@@ -17,9 +17,14 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class CreateOrderRequest {
+    // 주문 상세 정보 목록
     ArrayList<OrderDetailDTO> orderDetailList;
-    @ApiModelProperty(example="2500")
+
+    // 배송 비용
+    @ApiModelProperty(example = "2500")
     private BigDecimal deliveryPrice;
-    @ApiModelProperty(example="1", required = false)
+
+    // 쿠폰 코드 (선택 사항)
+    @ApiModelProperty(example = "1", required = false)
     private String couponCd;
 }

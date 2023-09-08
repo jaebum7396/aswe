@@ -27,13 +27,16 @@ public class GoodsPrice extends BaseEntity implements Serializable {
     @JsonIgnore
     private String goodsPriceCd;
 
+    // 상품 가격
     @Column(name = "GOODS_PRICE", nullable = true)
     private BigDecimal goodsPrice;
 
-    @Column(name = "CURRENT_PRICE_YN", nullable = true) // 현재가 여부
+    // 현재가 여부를 나타내는 필드
+    @Column(name = "CURRENT_PRICE_YN") // 현재가 여부
     @JsonIgnore
     private String currentPriceYn;
 
+    // 이 가격이 속한 상품을 나타내는 연관 관계 (Lazy 로딩)
     @ManyToOne
     @JoinColumn(name = "GOODS_CD")
     @JsonIgnore

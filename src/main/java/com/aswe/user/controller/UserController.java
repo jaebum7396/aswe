@@ -25,12 +25,12 @@ public class UserController {
     @Autowired CommonUtils commonUtils;
 
     @PostMapping(value = "/signup")
-    @Operation(summary="회원가입", description="회원 가입 API")
+    @Operation(summary="회원가입 엔드포인트", description="회원 가입 API")
     public ResponseEntity signup(@RequestBody SignupRequest signupRequest) throws Exception {
         return commonUtils.okResponsePackaging(userService.signup(signupRequest));
     }
     @PostMapping(value = "/login")
-    @Operation(summary="로그인", description="가입한 회원을 로그인 하는 API")
+    @Operation(summary="로그인 엔드포인트", description="가입한 회원을 로그인 하는 API")
     public ResponseEntity login(@RequestBody LoginRequest loginRequest) throws Exception {
         return commonUtils.okResponsePackaging(authService.generateToken(loginRequest));
     }

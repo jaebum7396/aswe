@@ -19,12 +19,12 @@ import java.util.Optional;
 
 @Repository
 public class OrderRepositoryQImpl implements OrderRepositoryQ {
-
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public Optional<Order> getOrder(String orderCd) {
+        // JPAQueryFactory를 사용하여 주문 정보를 조회합니다.
         JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 
         QOrder order = QOrder.order;

@@ -29,6 +29,7 @@ public class CommonUtils {
     @Value("${jwt.secret.key}")
     private String JWT_SECRET_KEY;
 
+    // 성공 응답을 포장하는 ResponseEntity를 생성합니다.
     public ResponseEntity<Response> okResponsePackaging(Map<String, Object> result) {
         Response response = Response.builder()
                 .message("요청 성공")
@@ -36,6 +37,7 @@ public class CommonUtils {
         return ResponseEntity.ok().body(response);
     }
 
+    // HttpServletRequest의 인증 헤더에서 JWT 클레임을 추출하고 파싱합니다.
     public Claims getClaims(HttpServletRequest request){
         try{
             Key secretKey = Keys.hmacShaKeyFor(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
@@ -49,10 +51,11 @@ public class CommonUtils {
         }
     }
 
+    // HttpServletRequest의 파라미터 맵을 변환합니다.
     public static HashMap<String, Object> convertRequestParameterMap(HttpServletRequest request) {
         HashMap<String, Object> mapParam = new HashMap<String, Object>();
         try {
-            // parameter 추가
+            // 파라미터 추가
             Enumeration<String> params = request.getParameterNames();
             while (params.hasMoreElements()) {
                 String key = params.nextElement();
@@ -66,6 +69,7 @@ public class CommonUtils {
         return mapParam;
     }
 
+    // 객체를 JSON 형태의 문자열로 반환합니다.
     public static String getJsonPretty(Object p_obj) {
         String strReturn = "";
         try {
@@ -78,7 +82,7 @@ public class CommonUtils {
         return strReturn;
     }
 
-    // getString 함수
+    // 객체를 문자열로 변환합니다.
     public static String getString(Object p_Object) {
         String strReturn = "";
 
@@ -93,6 +97,7 @@ public class CommonUtils {
         return strReturn;
     }
 
+    // 요청 바디를 문자열로 읽어옵니다.
     public static String readRequestBody(CachedBodyHttpServletWrapper requestWrapper) {
         try (BufferedReader reader = requestWrapper.getReader()) {
             return reader.lines().collect(Collectors.joining(System.lineSeparator()));
