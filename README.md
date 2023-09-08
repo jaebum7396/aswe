@@ -1,4 +1,4 @@
-### 구현방법
+### 구현스펙
 Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle, JUNIT
 
 ### 실행방법
