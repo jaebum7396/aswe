@@ -1,8 +1,8 @@
-### 구현 방법 및 구현 여부 
-Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle, JUNIT
+### 구현스펙
+Java 11, Spring Boot 2.7.8, JPA, QueryDSL, H2, Gradle
 
 ### 실행방법
-* [H2 Database](https://www.h2database.com/html/main.html)설치가 필요합니다!
+* [H2 Database](https://www.h2database.com/html/main.html) 설치가 필요합니다!
 * 이후 빌드 한 뒤 메인 메서드 실행
 
 ### 구현기능
@@ -18,7 +18,7 @@ Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle, JUNIT
 #### 3. 상품을 생성할 수 있다. ✔  
 - MART 권한 유저만 가능하도록 구현하였습니다. 
 #### 4. 상품 가격을 수정할 수 있다. ✔  
-- MART 권한 유저만 가능하도록 구현하였습니다. 
+- MART 권한 유저만 가능하도록 구현하였고 상품 가격에 한해 물리적 수정이 아닌 논리 수정으로 구현하였습니다.(가격 히스토리를 위해 TB_GOODS_PRICE 테이블에 INSERT하고 MAIN_PRICE 한행을 가격으로 가져오도록)
 #### 5. 특정 시점의 상품 가격을 조회할 수 있다. ✔  
 - (String goodsCd, String insertDt("yyyy-MM-dd hh:mm:ss"))
 #### 6. 상품을 삭제할 수 있다. ✔  
@@ -29,4 +29,4 @@ Java11, Spring Boot2.7.8, JPA, QueryDSL, H2, Gradle, JUNIT
 - 제품별 쿠폰 및 할인 반영 상황은 TB_ORDER_DETAIL 테이블에 저장토록, 종합 쿠폰 및 할인 반영 상황은 TB_ORDER 테이블에 저장토록 구현하였습니다.
 
 #### 테스트 코드 -> GoodsControllerTest, OrderControllerTest 
-##### 이외 *swagger 를 구성하여 요청 테스트 가능토록 하였습니다
+##### 이외 swagger 구성하여 요청 테스트 가능토록 하였습니다
