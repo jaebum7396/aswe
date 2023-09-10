@@ -1,6 +1,7 @@
 package com.aswe.coupon.service;
 
 import com.aswe.common.CommonUtils;
+import com.aswe.common.Constants.Constants;
 import com.aswe.common.exception.CalculateConsistencyException;
 import com.aswe.common.exception.NotFoundException;
 import com.aswe.coupon.model.dto.CouponType;
@@ -41,14 +42,14 @@ public class CouponService {
         ArrayList<HashMap<String, String>> roles = claim.get("roles", ArrayList.class);
 
         // 현재 유저가 'MART' 권한을 가졌는지 확인
-        roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException("마트 권한이 없습니다."));
+        roles.stream().filter(m -> m.get("authType").equals("MART")).findAny().orElseThrow(() -> new BadCredentialsException(Constants.BAD_CREDENTIAL_MART));
 
         // CreateCouponRequest를 Coupon 엔티티로 변환
         Coupon coupon = createCouponRequest.toEntity();
 
         if (createCouponRequest.getGoodsCd() != null) {
             String goodsCd = createCouponRequest.getGoodsCd();
-            Goods goods = goodsRepository.getGoods(goodsCd).orElseThrow(() -> new NotFoundException("상품이 존재하지 않습니다."));
+            Goods goods = goodsRepository.getGoods(goodsCd).orElseThrow(() -> new NotFoundException(Constants.PRODUCT_NOT_FOUND));
 
             if (coupon.getCouponType().equals(String.valueOf(CouponType.FIX))) {
                 // 고정 할인 쿠폰의 경우 할인 금액이 상품 가격보다 큰지 확인

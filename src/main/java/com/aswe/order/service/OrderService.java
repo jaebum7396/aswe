@@ -1,7 +1,7 @@
 package com.aswe.order.service;
 
 import com.aswe.common.CommonUtils;
-import com.aswe.common.exception.CalculateConsistencyException;
+import com.aswe.common.Constants.Constants;
 import com.aswe.common.exception.NotFoundException;
 import com.aswe.coupon.model.dto.CouponType;
 import com.aswe.coupon.model.entity.Coupon;
@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,7 +36,7 @@ public class OrderService {
     public Map<String, Object> searchOrder(String orderCd) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         // 주문을 조회하고 결과를 resultMap에 저장
-        Order order = orderRepository.findById(orderCd).orElseThrow(() -> new NotFoundException("주문이 존재하지 않습니다."));
+        Order order = orderRepository.findById(orderCd).orElseThrow(() -> new NotFoundException(Constants.ORDER_NOT_FOUND));
         resultMap.put("order", order);
         return resultMap;
     }
@@ -56,7 +55,7 @@ public class OrderService {
         Goods applicableGoods = null;
         if (createOrderRequest.getCouponCd() != null) { // 쿠폰 코드가 주어진 경우
             applicateCouponOpt = couponRepository.findById(createOrderRequest.getCouponCd());
-            applicateCoupon = applicateCouponOpt.orElseThrow(() -> new NotFoundException("적용하려는 쿠폰이 존재하지 않습니다."));
+            applicateCoupon = applicateCouponOpt.orElseThrow(() -> new NotFoundException(Constants.COUPON_NOT_FOUND));
             Optional<Goods> applicableGoodsOpt = Optional.ofNullable(applicateCoupon.getApplicableGoods());
             if (applicableGoodsOpt.isPresent()) { // 특정 상품 한정 쿠폰인 경우
                 goodsCouponFlag = true;
@@ -73,7 +72,7 @@ public class OrderService {
         BigDecimal totalPayPrice = new BigDecimal(0);
         for (OrderDetailDTO orderDetailDTO : orderDetailDTOList) {
             Goods goods = goodsRepository.getGoods(orderDetailDTO.getGoodsCd())
-                    .orElseThrow(() -> new NotFoundException("상품이 존재하지 않습니다."));
+                    .orElseThrow(() -> new NotFoundException(Constants.PRODUCT_NOT_FOUND));
             BigDecimal goodsPrice = goods.getGoodsPrices().get(0).getGoodsPrice().multiply(new BigDecimal(orderDetailDTO.getQuantity()));
             BigDecimal discountPrice = new BigDecimal(0);
             BigDecimal payPrice = new BigDecimal(0);
