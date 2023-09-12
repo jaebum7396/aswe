@@ -73,11 +73,11 @@ public class GoodsService {
         });
         ArrayList<GoodsPrice> goodsPrices = new ArrayList<GoodsPrice>();
         goodsPrices.add(GoodsPrice.builder()
-                .goods(goods)
-                .goodsPrice(((UpdateGoodsRequest) updateGoodsDTO).getPrice())
-                .currentPriceYn("Y")
-                .insertUserCd(claim.getSubject())
-                .build());
+            .goods(goods)
+            .goodsPrice(((UpdateGoodsRequest) updateGoodsDTO).getPrice())
+            .currentPriceYn("Y")
+            .insertUserCd(claim.getSubject())
+            .build());
         goods.setGoodsPrices(goodsPrices);
         goods.setUpdateUserCd(claim.getSubject());
         goodsRepository.save(goods);
