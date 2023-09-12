@@ -30,7 +30,7 @@ public class CreateCouponRequest {
     private CouponType couponType;
 
     // 할인 금액 또는 할인 비율 (필수)
-    // couponType이 "rate"인 경우 비율 (예: 20%)
+    // couponType이 "rate"인 경우 비율 (예: 20)
     // couponType이 "fix"인 경우 고정 금액 (예: 20000)
     @ApiModelProperty(example="20", required = true)
     private BigDecimal discount;

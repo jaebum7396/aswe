@@ -36,7 +36,7 @@ public class Coupon extends BaseEntity implements Serializable {
     private String couponType;
 
     // 할인 금액 또는 할인 비율 (필수, 기본값 "1")
-    // couponType이 "rate"인 경우 비율 (예: 0.20은 20% 할인을 나타냄)
+    // couponType이 "rate"인 경우 비율 (예: 20은 20% 할인을 나타냄)
     // couponType이 "fix"인 경우 고정 금액 (예: 20000)
     @Column(name = "DISCOUNT", nullable = false)
     private BigDecimal discount;
