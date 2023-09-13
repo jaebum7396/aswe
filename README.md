@@ -10,14 +10,14 @@ Java 11, Spring Boot 2.7.8, JPA, QueryDSL, H2, Gradle
 ![캡처](https://github.com/jaebum7396/aswe/assets/38182229/56e57b0c-8fb1-4ff6-8a91-5e1905636226)
 * 일부 요청에는 요청 헤더에 Authorization이 필요합니다!(-H Authorization : ${jwt} -- Bearer 없이 token만)
 #### CouponController
-##### 1. 쿠폰생성
+##### 1. 쿠폰생성 -- 요청 헤더에 MART권한을 가진 Authorization 토큰이 필요합니다
 ![쿠폰생성](https://github.com/jaebum7396/aswe/assets/38182229/13649b0f-0278-46ff-992d-32912fed482d)
 #### GoodsController
-##### 1. 상품생성
+##### 1. 상품생성 -- 요청 헤더에 MART권한을 가진 Authorization 토큰이 필요합니다
 ![상품생성](https://github.com/jaebum7396/aswe/assets/38182229/f30e8b69-da30-4e97-ba41-1944d6ea00d7)
-##### 2. 상품수정
+##### 2. 상품수정 -- 요청 헤더에 MART권한을 가진 Authorization 토큰이 필요합니다
 ![상품수정](https://github.com/jaebum7396/aswe/assets/38182229/ea928cf4-7bbb-42c1-908e-40ab4eca7aa1)
-##### 3. 상품삭제
+##### 3. 상품삭제 -- 요청 헤더에 MART권한을 가진 Authorization 토큰이 필요합니다
 ![상품삭제](https://github.com/jaebum7396/aswe/assets/38182229/e14f54c9-12a6-431e-a67a-ec2aae3c34e6)
 ##### 4. 상품조회
 ![상품조회](https://github.com/jaebum7396/aswe/assets/38182229/617638f6-fde3-4a3b-9722-9f5be3efa51c)
