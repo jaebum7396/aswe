@@ -8,7 +8,7 @@ Java 11, Spring Boot 2.7.8, JPA, QueryDSL, H2, Gradle
 
 ### 구현기능
 ![캡처](https://github.com/jaebum7396/aswe/assets/38182229/56e57b0c-8fb1-4ff6-8a91-5e1905636226)
-* 일부 요청에는 요청 헤더에 Authorization이 필요합니다!(-H Authorization : ${jwt} -- Bearer 없이 token만)
+* 일부 요청에는 요청 헤더에 Authorization이 필요합니다!(-H Authorization : ${jwt} -- Bearer 없이 token만!)
 #### CouponController
 ##### 1. 쿠폰생성 -- 요청 헤더에 MART권한을 가진 Authorization 토큰이 필요합니다
 ![쿠폰생성](https://github.com/jaebum7396/aswe/assets/38182229/13649b0f-0278-46ff-992d-32912fed482d)
