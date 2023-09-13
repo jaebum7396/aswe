@@ -1,18 +1,18 @@
-### 구현스펙
+## 구현스펙
 Java 11, Spring Boot 2.7.8, JPA, QueryDSL, H2, Gradle
 
-### 실행방법
+## 실행방법
 * [H2 Database](https://www.h2database.com/html/main.html) 설치가 필요합니다!
 * 이후 빌드 한 뒤 메인 메서드 실행
 
 
-### 구현기능
+## 구현기능
 ![캡처](https://github.com/jaebum7396/aswe/assets/38182229/56e57b0c-8fb1-4ff6-8a91-5e1905636226)
 * 일부 요청에는 요청 헤더에 Authorization이 필요합니다!(-H Authorization : ${jwt} -- Bearer 없이 token만!)
-#### CouponController
+### CouponController
 ##### 1. 쿠폰생성 -- 요청 헤더에 MART권한을 가진 Authorization 토큰이 필요합니다
 ![쿠폰생성](https://github.com/jaebum7396/aswe/assets/38182229/13649b0f-0278-46ff-992d-32912fed482d)
-#### GoodsController
+### GoodsController
 ##### 1. 상품생성 -- 요청 헤더에 MART권한을 가진 Authorization 토큰이 필요합니다
 ![상품생성](https://github.com/jaebum7396/aswe/assets/38182229/f30e8b69-da30-4e97-ba41-1944d6ea00d7)
 ##### 2. 상품수정 -- 요청 헤더에 MART권한을 가진 Authorization 토큰이 필요합니다
@@ -23,13 +23,16 @@ Java 11, Spring Boot 2.7.8, JPA, QueryDSL, H2, Gradle
 ![상품조회](https://github.com/jaebum7396/aswe/assets/38182229/617638f6-fde3-4a3b-9722-9f5be3efa51c)
 ##### 5. 상품금액시간별조회
 ![상품금액시간조회](https://github.com/jaebum7396/aswe/assets/38182229/542b526e-f6cd-45b0-bb04-c90547fe9a97)
-#### OrderController
+### OrderController
 ##### 1. 주문생성
 ![주문생성](https://github.com/jaebum7396/aswe/assets/38182229/23e83ef3-f497-4ca9-98bb-69a307c9bc83)
 ##### 2. 주문조회
 ![주문조회](https://github.com/jaebum7396/aswe/assets/38182229/76b2e29f-4950-4d12-88dd-255140983363)
+### UserContorller
+##### 1. 로그인
+![로그인](https://github.com/jaebum7396/aswe/assets/38182229/3019cd43-9fc9-4412-a632-c61c01fadc7e)
 
-### 서비스 요구사항
+## 서비스 요구사항
 
 #### 1. 마트 권한과 일반 사용자 권한이 구분되어있다. ✔  
 - MART, USER 별로 유저를 생성하는 기능 및 로그인 시 JWT에 적재하여 권한을 구분하였습니다. MART(id:test_mart/pw:1) USER(id:test/pw:1)
