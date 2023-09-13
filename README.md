@@ -7,7 +7,7 @@ Java 11, Spring Boot 2.7.8, JPA, QueryDSL, H2, Gradle
 
 
 ### 구현기능
-![캡처](https://github.com/jaebum7396/aswe/assets/38182229/31cae4f1-5111-4f73-8986-43f8ee8cd1b1)
+![캡처](https://github.com/jaebum7396/aswe/assets/38182229/56e57b0c-8fb1-4ff6-8a91-5e1905636226)
 * 일부 요청에는 요청 헤더에 Authorization이 필요합니다!(-H Authorization : ${jwt} -- Bearer 없이 token만)
 
 ### 서비스 요구사항
