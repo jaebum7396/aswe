@@ -131,14 +131,4 @@ public class OrderService {
         resultMap.put("order", order);
         return resultMap;
     }
-
-    public Map<String, Object> updateOrder(Order order) throws Exception {
-        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        return resultMap;
-    }
-
-    public Map<String, Object> deleteOrder(Order order) throws Exception {
-        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        return resultMap;
-    }
 }

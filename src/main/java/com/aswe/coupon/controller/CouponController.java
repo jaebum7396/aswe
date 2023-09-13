@@ -23,7 +23,7 @@ public class CouponController {
     @Autowired CouponService couponService;
     @Autowired CommonUtils commonUtils;
     @PostMapping(value = "/coupon")
-    @Operation(summary="쿠폰 생성 요청을 처리하는 엔드포인트", description="쿠폰 생성 API")
+    @Operation(summary="쿠폰 생성 요청을 처리하는 엔드포인트", description="쿠폰 생성 API - MART 권한이 필요합니다.")
     public ResponseEntity createCoupon(HttpServletRequest request, @RequestBody CreateCouponRequest createCouponRequest) throws Exception {
         return commonUtils.okResponsePackaging(couponService.createCoupon(request, createCouponRequest));
     }
